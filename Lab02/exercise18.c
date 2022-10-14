@@ -8,7 +8,7 @@ int main()
     printf("Digite um volume em metros cubicos: ");
     scanf("%f", &m);
     l = 1000 * m;
-    printf("O volume em litros e: %f", l);
+    printf("O volume em litros eh: %f", l);
 
     return 0;
 }

@@ -8,7 +8,7 @@ int main()
     printf("Digite um numero real: ");
     scanf("%f", &number);
     number = pow(number, 2);
-    printf("Este numero ao quadrado e: %f", number);
+    printf("Este numero ao quadrado eh: %f", number);
 
     return 0;
 }

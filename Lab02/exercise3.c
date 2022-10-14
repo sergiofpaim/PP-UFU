@@ -7,7 +7,7 @@ int main()
     printf("Digite 3 numeros inteiros com espaços entre eles: ");
     scanf("%d %d %d", &number1, &number2, &number3);
     result = (number1 + number2) + number3;
-    printf("A soma destes numeros e: %d", result);
+    printf("A soma destes numeros eh: %d", result);
 
     return 0;
 }

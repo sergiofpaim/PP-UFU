@@ -9,7 +9,7 @@ int main()
     printf("Digite um valor em reais: ");
     scanf("%f", &r);
     d = r / cotation;
-    printf("O valor equivalente em dolares e: %f", d);
+    printf("O valor equivalente em dolares eh: %f", d);
 
     return 0;
 }

@@ -8,7 +8,7 @@ int main()
     printf("Digite um numero real: ");
     scanf("%f", &number);
     number = number / 5;
-    printf("A quinta parte desse numero e: %f", number);
+    printf("A quinta parte desse numero eh: %f", number);
 
     return 0;
 }

@@ -8,7 +8,7 @@ int main()
     printf("Digite um comprimento em centimetros: ");
     scanf("%f", &c);
     p = c / 2.54;
-    printf("O comprimento em polegadas e: %f", p);
+    printf("O comprimento em polegadas eh: %f", p);
 
     return 0;
 }

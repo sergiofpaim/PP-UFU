@@ -8,7 +8,7 @@ int main()
     printf("Digite uma massa em libras: ");
     scanf("%f", &l);
     k = l * 0.45;
-    printf("A massa em Kg e: %f", k);
+    printf("A massa em Kg eh: %f", k);
 
     return 0;
 }

@@ -8,7 +8,7 @@ int main()
     printf("Digite uma area em hectares: ");
     scanf("%f", &h);
     m = h * 10000;
-    printf("O valor em metros quadrados e: %f", m);
+    printf("O valor em metros quadrados eh: %f", m);
 
     return 0;
 }
