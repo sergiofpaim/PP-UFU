@@ -8,7 +8,7 @@ int main()
     printf("Digite uma velocidade em m/s: ");
     scanf("%f", &m);
     k = m * 3.6;
-    printf("%f", k);
+    printf("A velocidade em Km/H e: %f", k);
 
     return 0;
 }

@@ -8,7 +8,7 @@ int main()
     printf("Digite um angulo em radianos: ");
     scanf("%f", &r);
     g = r * 180 / 3.141592;
-    printf("%f", g);
+    printf("O angulo em graus e: %f", g);
 
     return 0;
 }

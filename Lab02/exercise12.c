@@ -8,7 +8,7 @@ int main()
     printf("Digite uma distancia em milhas: ");
     scanf("%f", &m);
     k = 1.61 * m;
-    printf("%f", k);
+    printf("A distancia em Km e:%f", k);
 
     return 0;
 }

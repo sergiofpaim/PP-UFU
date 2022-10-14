@@ -4,11 +4,11 @@
 
 int main()
 {
-    float g, r;
-    printf("Digite um angulo em graus: ");
-    scanf("%f", &g);
-    r = g * 3.141592 / 180;
-    printf("%f", r);
+    float p, c;
+    printf("Digite um comprimento em polegadas: ");
+    scanf("%f", &p);
+    c = p * 2.54;
+    printf("O comprimento em centimetros e: %f", c);
 
     return 0;
 }
