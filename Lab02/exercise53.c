@@ -13,5 +13,6 @@ int main()
     scanf("%f", &p);
     c = (2 * l + 2 * c) * p;
     printf("O valor gasto para cerca o terreno sera %2.f", c);
+
     return 0;
 }

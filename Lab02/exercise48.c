@@ -12,5 +12,6 @@ int main()
     m = rest / 60;
     s = rest % 60;
     printf("O tempo em horas, minutos e segundos eh: %dh %dm %ds \n", h, m, s);
+
     return 0;
 }

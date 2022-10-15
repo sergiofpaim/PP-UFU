@@ -11,5 +11,6 @@ int main()
     scanf("%d", &age);
     n = year - age;
     printf("Voce nasceu no ano: %d \n", n);
+
     return 0;
 }

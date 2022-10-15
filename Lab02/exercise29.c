@@ -9,12 +9,13 @@ int main()
     s = 0;
     while (c <= 4)
     {
-        printf("Digite a %1.fa nota\n", c);
+        printf("Digite a %1.fa nota: ", c);
         scanf("%f", &num);
         s = s + num;
         c = c + 1;
     }
     m = s / 4;
     printf("A media eh: %f", m);
+
     return 0;
 }

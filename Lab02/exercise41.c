@@ -10,6 +10,7 @@ int main()
     printf("Digite o numero de horas trabalhadas no mes: \n");
     scanf("%f", &h);
     s = (v * h) * 1.1;
-    printf("O valor que voce vai receber sera %2.f", s);
+    printf("O valor que voce vai receber eh: %2.f", s);
+
     return 0;
 }

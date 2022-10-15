@@ -12,5 +12,6 @@ int main()
     n3 = ((num % 1000) % 100) / 10;
     n4 = ((num % 1000) % 100) % 10;
     printf("O numero digitado foi: \n %d \n %d \n %d \n %d \n", n1, n2, n3, n4);
+
     return 0;
 }

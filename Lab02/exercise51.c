@@ -11,5 +11,6 @@ int main()
     scanf("%f", &cat2);
     h = sqrt((pow(cat1, 2) + pow(cat2, 2)));
     printf("O distancia dos pontos (%f, %f) a origem (0, 0) eh: %f", cat1, cat2, h);
+
     return 0;
 }
