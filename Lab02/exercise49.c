@@ -15,10 +15,10 @@ int main()
     tFH = tIH + dH;
     if (tIS + dS >= 60)
         tFM++;
-    else if (tIM + dM >= 60)
+    if (tIM + dM >= 60)
         tFH++;
-    else if (tFH >= 24)
-        tFH -= 24;
+    if (tFH >= 24)
+        tFH = tFH - 24;
 
     printf("O experimento terminou as: %d horas, %d minutos e %d segundos", tFH, tFM, tFS);
 
