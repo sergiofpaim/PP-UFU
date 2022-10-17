@@ -14,13 +14,10 @@ int main()
     printf("Digite o valor investido pelo jogador 3: ");
     scanf("%f", &p3);
     t = (p1 + p2) + p3;
-    p1 = p1 / t * v;
-    p2 = p2 / t * v;
-    p3 = p3 / t * v;
-    printf("O jogador 1 receberia: \n"
-           "O jogador 2 receberia: \n"
-           "O jogador 3 receberia: ",
-           p1, p2, p3);
+    printf("O jogador 1 receberia: %f\n"
+           "O jogador 2 receberia: %f\n"
+           "O jogador 3 receberia: %f",
+           p1 / t * v, p2 / t * v, p3 / t * v);
 
     return 0;
 }
