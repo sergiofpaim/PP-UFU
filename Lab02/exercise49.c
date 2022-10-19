@@ -11,7 +11,7 @@ int main()
     scanf("%d, %d, %d", &dH, &dM, &dS);
 
     tFS = (tIS + dS) % 60;
-    tFM = (tIS + dS) % 60;
+    tFM = (tIM + dM) % 60;
     tFH = tIH + dH;
     if (tIS + dS >= 60)
         tFM++;
