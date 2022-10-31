@@ -3,7 +3,6 @@
 
 int main()
 {
-    int choice;
     float n1, n2, n3;
 
     printf("Escolha 3 valores dos lados de um triangulo\n");
