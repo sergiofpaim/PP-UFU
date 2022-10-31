@@ -10,7 +10,7 @@ int main()
     scanf("%f, %f", &n1, &n2);
 
     printf("Escolha uma operacao matematica, digite 1 para subtracao, 2 para adicao, 3 para divisao e 4 para multiplicacao: ");
-    scanf("%f", &choice);
+    scanf("%d", &choice);
 
     switch (choice)
     {
