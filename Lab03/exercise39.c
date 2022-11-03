@@ -4,25 +4,33 @@
 
 int main()
 {
-    float v, c;
+    float s, y, b = 0, fS;
 
-    printf("Digite o valor da venda: ");
-    scanf("%f", &v);
+    printf("Digite o salario atual: ");
+    scanf("%f", &s);
 
-    if (v >= 100000)
-        c = 700 + (v * 0.16);
-    else if (v < 100000 && v >= 80000)
-        c = 650 + (v * 0.14);
-    else if (v < 80000 && v >= 60000)
-        c = 600 + (v * 0.14);
-    else if (v < 60000 && v >= 40000)
-        c = 550 + (v * 0.14);
-    else if (v < 40000 && v >= 20000)
-        c = 500 + (v * 0.14);
+    printf("Digite o tempo de serviço em anos: ");
+    scanf("%f", &y);
+
+    if (s <= 500)
+        s *= 1.25;
+    else if (s <= 1000)
+        s *= 1.2;
+    else if (s <= 1500)
+        s *= 1.15;
+    else if (s <= 2000)
+        s *= 1.1;
+
+    if (y > 1 && y < 4)
+        b = 100;
+    else if (y < 6)
+        b = 100;
+    else if (y < 10)
+        b = 100;
     else
-        c = 400 + (v * 0.14);
+        b = 500;
 
-    printf("A comissao eh: %f", c);
+    printf("O salario reajustado eh: %f", (s + b));
 
     return 0;
 }
