@@ -15,28 +15,28 @@ int main()
     if (f <= 20)
     {
         if (n <= 3.9)
-            c = "E";
+            c = 'E';
         else if (n <= 4.9)
-            c = "D";
+            c = 'D';
         else if (n <= 7.4)
-            c = "C";
+            c = 'C';
         else if (n <= 8.9)
-            c = "B";
+            c = 'B';
         else if (n <= 10)
-            c = "A";
+            c = 'A';
     }
     else
     {
         if (n <= 3.9)
-            c = "E";
+            c = 'E';
         else if (n <= 4.9)
-            c = "E";
+            c = 'E';
         else if (n <= 7.4)
-            c = "D";
+            c = 'D';
         else if (n <= 8.9)
-            c = "C";
+            c = 'C';
         else if (n <= 10)
-            c = "B";
+            c = 'B';
     }
 
     printf("Aluno conceito: %c", c);
