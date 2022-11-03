@@ -4,7 +4,7 @@
 
 int main()
 {
-    int year, month, day, bis;
+    int year, month, maxmonth = 12, day, maxday, bis;
 
     printf("Digite um dia: ");
     scanf("%d", &day);
@@ -13,27 +13,32 @@ int main()
     printf("Digite um ano: ");
     scanf("%d", &year);
 
-    if ((year % 400) == 0)
-        bis = 1;
-    else if ((year % 4) == 0 && (year % 100) != 0)
-        bis = 1;
+    {
+        maxday = 31;
+    }
+    else if (month == 2)
+    {
+        if (bis == 1)
+            maxday = 29;
+        else
+            maxday = 28;
+    }
+    else maxday = 30;
 
-    if (month > 12)
-        printf("Data invalida");
-    else if (bis == 0 && month == 2 && day > 28)
-        printf("Data invalida");
-    else if (bis == 1 && month == 2 && day > 29)
-        printf("Data invalida");
-    else if (month % 2 == 0 && month <= 7 && day > 30)
-        printf("Data invalida");
-    else if (month % 2 != 0 && month <= 7 && day > 31)
-        printf("Data invalida");
-    else if (month % 2 != 0 && month >= 8 && day > 30)
-        printf("Data invalida");
-    else if (month % 2 == 0 && month >= 8 && day > 31)
+    // Calcula o numero maximo de dias por mes
+
+    if (day > maxday || month > maxmonth)
         printf("Data invalida");
     else
         printf("Data valida");
 
     return 0;
+    if ((year % 400) == 0)
+        bis = 1;
+    else if ((year % 4) == 0 && (year % 100) != 0)
+        bis = 1;
+
+    // Calcula se o ano eh bissexto
+
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 11)
 }
