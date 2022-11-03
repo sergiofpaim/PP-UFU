@@ -13,6 +13,14 @@ int main()
     printf("Digite um ano: ");
     scanf("%d", &year);
 
+    if ((year % 400) == 0)
+        bis = 1;
+    else if ((year % 4) == 0 && (year % 100) != 0)
+        bis = 1;
+
+    // Calcula se o ano eh bissexto
+
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 11)
     {
         maxday = 31;
     }
@@ -23,7 +31,8 @@ int main()
         else
             maxday = 28;
     }
-    else maxday = 30;
+    else
+        maxday = 30;
 
     // Calcula o numero maximo de dias por mes
 
@@ -33,12 +42,4 @@ int main()
         printf("Data valida");
 
     return 0;
-    if ((year % 400) == 0)
-        bis = 1;
-    else if ((year % 4) == 0 && (year % 100) != 0)
-        bis = 1;
-
-    // Calcula se o ano eh bissexto
-
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 11)
 }

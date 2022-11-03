@@ -4,25 +4,42 @@
 
 int main()
 {
-    float v, c;
+    int year, month, maxmonth = 12, day, maxday, bis, currentYear = 2022;
 
-    printf("Digite o valor da venda: ");
-    scanf("%f", &v);
+    printf("Digite o dia de nascimento: ");
+    scanf("%d", &day);
+    printf("Digite o mes de nascimento: ");
+    scanf("%d", &month);
+    printf("Digite um ano de nascimento: ");
+    scanf("%d", &year);
 
-    if (v >= 100000)
-        c = 700 + (v * 0.16);
-    else if (v < 100000 && v >= 80000)
-        c = 650 + (v * 0.14);
-    else if (v < 80000 && v >= 60000)
-        c = 600 + (v * 0.14);
-    else if (v < 60000 && v >= 40000)
-        c = 550 + (v * 0.14);
-    else if (v < 40000 && v >= 20000)
-        c = 500 + (v * 0.14);
+    if ((year % 400) == 0)
+        bis = 1;
+    else if ((year % 4) == 0 && (year % 100) != 0)
+        bis = 1;
+
+    // Calcula se o ano eh bissexto
+
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 11)
+    {
+        maxday = 31;
+    }
+    else if (month == 2)
+    {
+        if (bis == 1)
+            maxday = 29;
+        else
+            maxday = 28;
+    }
     else
-        c = 400 + (v * 0.14);
+        maxday = 30;
 
-    printf("A comissao eh: %f", c);
+    // Calcula o numero maximo de dias por mes
+
+    if (day > maxday || day <= 0 || month > maxmonth || month <= 0 || year > currentYear)
+        printf("Data invalida");
+    else
+        printf("Data valida");
 
     return 0;
 }

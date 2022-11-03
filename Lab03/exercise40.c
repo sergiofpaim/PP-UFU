@@ -4,25 +4,25 @@
 
 int main()
 {
-    float v, c;
+    float fC, d, i = 0;
 
-    printf("Digite o valor da venda: ");
-    scanf("%f", &v);
+    printf("Digite o custo de fabrica: ");
+    scanf("%f", &fC);
 
-    if (v >= 100000)
-        c = 700 + (v * 0.16);
-    else if (v < 100000 && v >= 80000)
-        c = 650 + (v * 0.14);
-    else if (v < 80000 && v >= 60000)
-        c = 600 + (v * 0.14);
-    else if (v < 60000 && v >= 40000)
-        c = 550 + (v * 0.14);
-    else if (v < 40000 && v >= 20000)
-        c = 500 + (v * 0.14);
+    if (fC <= 12000)
+        d = (fC * 0.05);
+    else if (fC <= 25000)
+    {
+        d = (fC * 0.1);
+        i = (fC * 0.15);
+    }
     else
-        c = 400 + (v * 0.14);
+    {
+        d = (fC * 0.15);
+        i = (fC * 0.2);
+    }
 
-    printf("A comissao eh: %f", c);
+    printf("O custo ao consumidor eh: %f", ((fC + d) + i));
 
     return 0;
 }
