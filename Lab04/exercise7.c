@@ -6,9 +6,11 @@ int main()
 
     while (counter <= 10)
     {
-        printf("Digite o %1.f numero: ", counter);
+        printf("Digite o %1.f numero positivo: ", counter);
         scanf("%f", &n);
-        r += n;
+        if (n > 0)
+            r += n;
+
         counter++;
     }
 
