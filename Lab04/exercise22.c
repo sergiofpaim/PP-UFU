@@ -30,7 +30,10 @@ int main()
             n5F = n5;
         }
     }
-    printf("O maior palindromo feito a partir do produto dos numeros eh: %d%d%d%d%d", n1F, n2F, n3F, n4F, n5F);
+    if (n1F > 1 || n2F > 1 || n3F > 1 || n4F > 1 || n5F > 1)
+        printf("Nao a palindromo");
+    else
+        printf("O maior palindromo feito a partir do produto dos numeros eh: %d%d%d%d%d", n1F, n2F, n3F, n4F, n5F);
 
     return 0;
 }
