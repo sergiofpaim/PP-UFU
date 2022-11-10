@@ -2,9 +2,10 @@
 
 int main()
 {
-    int i;
+    int n, i = 3;
+    printf("Os 5 primeiros multiplos de 3, maiores que zero sao:");
+    for (n = 1; n <= 5; n++)
+        printf(" %d", (i * n));
 
-    printf("Digite um numero: ");
-    scanf("%d", &i);
-    printf("O numero digitado foi %d", i);
+    return 0;
 }
