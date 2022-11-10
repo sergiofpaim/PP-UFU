@@ -2,12 +2,12 @@
 
 int main()
 {
-    int n, counter;
+    int counter;
+    const int n = 1000;
 
-    printf("Digite um numero inteiro: ");
-    scanf("%d", &n);
+    printf("Todos os números naturais abaixo de 1000 que são múltiplos de 3 ou 5 sao\n");
     for (counter = 1; counter < n; counter++)
-        if ((n % counter) == 0)
+        if (counter % 3 == 0 || counter % 5 == 0)
             printf("%d ", counter);
 
     return 0;
