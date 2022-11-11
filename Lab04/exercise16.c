@@ -12,7 +12,7 @@ int main()
         scanf("%f", &n1);
         printf("Digite um numero: ");
         scanf("%f", &n2);
-        printf("Escolha uma operacao, sendo 1 (Adicao), 2 (Subtracao), 3 (Multiplicacao), 4 (Divisao) e 5 (Saída)\n");
+        printf("Escolha uma operacao, sendo 1 (Adicao), 2 (Subtracao), 3 (Multiplicacao), 4 (Divisao) e 5 (Saida)\n");
         scanf("%d", &choice);
 
         switch (choice)
