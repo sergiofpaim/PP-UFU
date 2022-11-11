@@ -3,17 +3,40 @@
 
 int main()
 {
-    int counter = 1, n;
+    int choice;
+    float keep = 1, n1, n2, r = 0;
 
-    while (counter == 1)
+    while (keep == 1)
     {
-        printf("Digite um numero positivo para ser processado, ou um negativo caso queira parar: ");
-        scanf("%d", &n);
+        printf("Digite um numero: ");
+        scanf("%f", &n1);
+        printf("Digite um numero: ");
+        scanf("%f", &n2);
+        printf("Escolha uma operacao, sendo 1 (Adicao), 2 (Subtracao), 3 (Multiplicacao), 4 (Divisao) e 5 (Saída)\n");
+        scanf("%d", &choice);
 
-        if (n <= 0)
-            counter = 0;
-        else
-            printf("O quadrado eh: %f\nO cubo eh: %f\nA raiz quadrada eh: %f\n", pow(n, 2), pow(n, 3), (sqrt(n)));
+        switch (choice)
+        {
+        case 1:
+            r = (n1 + n2);
+            break;
+        case 2:
+            r = (n1 - n2);
+            break;
+        case 3:
+            r = (n1 * n2);
+            break;
+        case 4:
+            r = (n1 / n2);
+            break;
+        case 5:
+            keep = 0;
+            break;
+        }
+        if (r != 0)
+            printf("O resultado eh: %f\n", r);
+
+        r = 0;
     }
 
     return 0;
