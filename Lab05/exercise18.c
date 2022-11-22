@@ -1,20 +1,26 @@
 #include <stdio.h>
-#include <stdlib.h>
-int main(int argc, char *argv[])
+#include <math.h>
+
+int calculateExp(int n1, int n2);
+
+int main()
 {
-    const currentYear = 2022;
-    float s = 2000, initialYear = 1995, bonus;
+    int n1, n2;
 
-    while (initialYear <= currentYear)
-    {
-        bonus = (s * 0.015);
-        s += bonus;
-        bonus *= 2;
+    printf("Digite um valor: ");
+    scanf("%d", &n1);
+    printf("Digite outro valor ao qual o primeiro sera elevado: ");
+    scanf("%d", &n2);
 
-        initialYear++;
-    }
-
-    printf("O salario atual eh: %f", s);
+    printf("O resultado eh %d", calculateExp(n1, n2));
 
     return 0;
+}
+
+int calculateExp(int n1, int n2)
+{
+    for (int i = 1; i < n2; i++)
+        n1 *= n1;
+
+    return n1;
 }
