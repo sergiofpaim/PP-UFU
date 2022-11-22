@@ -1,28 +1,33 @@
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
+#include <math.h>
+
+void calculateConsume(float d, float l);
 
 int main()
 {
-    int counter, n, d1, d2;
+    float d, l;
 
-    printf("Digite um numero de vezes que os dados serao jogados: ");
-    scanf("%d", &n);
+    printf("Digite a distancia em km: ");
+    scanf("%f", &d);
+    printf("Digite quantos litros foram consumidos no percurso: ");
+    scanf("%f", &l);
 
-    for (counter = 1; counter <= n; counter++)
-    {
-        printf("Na %da rodada\n", counter);
+    calculateConsume(d, l);
+}
 
-        d1 = rand() % (6 + 1 - 1) + 1;
-        d2 = rand() % (6 + 1 - 1) + 1;
+void calculateConsume(float d, float l)
+{
+    float r;
 
-        if (d1 > d2)
-            printf("Dado 1: %d > Dado 2: %d\n", d1, d2);
-        else if (d1 < d2)
-            printf("Dado 1: %d < Dado 2: %d\n", d1, d2);
-        else
-            printf("Dado 1: %d = Dado 2: %d\n", d1, d2);
-    }
+    r = d / l;
+
+    if (r < 8)
+        printf("Venda o carro!");
+    else if (r >= 8 && r <= 14)
+        printf("Economico");
+    else
+        printf("Super economico!");
 
     return 0;
 }

@@ -1,20 +1,39 @@
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
+
+void determineTriangle(float n1, float n2, float n3);
 
 int main()
 {
-    int counter = 1, n;
+    float n1, n2, n3;
 
-    while (counter == 1)
+    printf("Escolha 3 valores dos lados de um triangulo\n");
+
+    printf("Digite o primeiro valor: ");
+    scanf("%f", &n1);
+
+    printf("Digite o segundo valor: ");
+    scanf("%f", &n2);
+
+    printf("Digite o terceiro valor: ");
+    scanf("%f", &n3);
+
+    determineTriangle(n1, n2, n3);
+}
+
+void determineTriangle(float n1, float n2, float n3)
+{
+    if (n3 < (n1 + n2) && n2 < (n3 + n1) && n1 < (n3 + n2))
     {
-        printf("Digite um numero positivo para ser processado, ou um negativo caso queira parar: ");
-        scanf("%d", &n);
+        printf("Os lados fazem um triangulo ");
 
-        if (n <= 0)
-            counter = 0;
+        if (n1 == n2 && n1 == n3)
+            printf("equilatero");
+        else if (n1 == n2 || n1 == n3 || n2 == n3)
+            printf("isoceles");
         else
-            printf("O quadrado eh: %f\nO cubo eh: %f\nA raiz quadrada eh: %f\n", pow(n, 2), pow(n, 3), (sqrt(n)));
+            printf("escaleno");
     }
-
-    return 0;
+    else
+        printf("Os lados nao fazem um triangulo");
 }
