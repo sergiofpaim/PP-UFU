@@ -16,7 +16,7 @@ void calculateLines(int n)
     {
         for (int j = 0; j < i; j++)
         {
-            printf("!");
+            printf("*");
         }
         printf("\n");
     }
@@ -24,7 +24,7 @@ void calculateLines(int n)
     {
         for (int j = 0; j < i; j++)
         {
-            printf("!");
+            printf("*");
         }
         printf("\n");
     }
