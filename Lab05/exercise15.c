@@ -19,6 +19,8 @@ int main()
     scanf("%f", &n3);
 
     determineTriangle(n1, n2, n3);
+
+    return 0;
 }
 
 void determineTriangle(float n1, float n2, float n3)

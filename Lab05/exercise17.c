@@ -1,16 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
-{
-    float c = 1.5, z = 1.1;
-    int year = 0;
+void calculateSum(int n1, int n2);
 
-    while (c >= z)
+void main()
+{
+    int n1, n2;
+
+    printf("Digite um numero inteiro positivo: ");
+    scanf("%d", &n1);
+    printf("Digite outro numero inteiro positivo: ");
+    scanf("%d", &n2);
+
+    if (n1 < 0 || n2 < 0)
+        printf("Erro.");
+    else
+        calculateSum(n1, n2);
+}
+
+void calculateSum(int n1, int n2)
+{
+    int sum = 0, temp;
+
+    if (n2 > n1)
     {
-        c += 0.02;
-        z += 0.03;
-        year++;
+        temp = n2;
+        n2 = n1;
+        n1 = temp;
     }
-    printf("Sao necessarios %d anos!\n\n", year);
+
+    for (int i = n2; i < n1; i++)
+        sum += i;
+
+    printf("A soma dos numeros inteiros entre estes numeros eh: %d", sum);
 }

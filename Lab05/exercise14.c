@@ -14,6 +14,8 @@ int main()
     scanf("%f", &l);
 
     calculateConsume(d, l);
+
+    return 0;
 }
 
 void calculateConsume(float d, float l)
