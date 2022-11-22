@@ -1,25 +1,23 @@
 #include <stdio.h>
-#include <stdlib.h>
+
 int main()
 {
-    int counter, a, b;
+    int n;
 
-    printf("Digite um numero: ");
-    scanf("%d", &a);
-    printf("Digite um numero: ");
-    scanf("%d", &b);
+    printf("Digite um numero de linhas: ");
+    scanf("%d", &n);
 
-    printf("Todos os números primos entre esses numeros sao:\n");
-    for (counter = a; counter < b; counter++)
+    calculateLines(n);
+}
+
+void calculateLines(int n)
+{
+    for (int i = 0; i <= n; i++)
     {
-        if (counter < 4)
+        for (int j = 0; j < i; j++)
         {
-            printf("2 3 ");
-            counter = 4;
+            printf("!");
         }
-        if (counter % 2 != 0 && counter % 3 != 0)
-            printf("%d ", counter);
+        printf("\n");
     }
-
-    return 0;
 }

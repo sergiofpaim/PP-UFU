@@ -1,14 +1,34 @@
 #include <stdio.h>
-#include <stdlib.h>
-int main()
+#include <math.h>
+
+int checkPrimeNumbers(int n);
+
+void main()
 {
-    int counter;
-    const int n = 2000000;
+    int n;
 
-    printf("Todos os números primos abaixo de 2.000.000 sao:\n 2 3 ");
-    for (counter = 4; counter < n; counter++)
-        if (counter % 2 != 0 && counter % 3 != 0)
-            printf("%d ", counter);
+    printf("Digite um numero inteiro maior que 1: ");
+    scanf("%d", &n);
 
-    return 0;
+    if (n < 1)
+        printf("Nao ha primos.");
+    else
+        printf("O numero de numeros primos abaixo de %d eh: %d", n, checkPrimeNumbers(n));
+}
+
+int checkPrimeNumbers(int n)
+{
+    int counter = 2;
+
+    for (int i = n - 1; i > 1; i--)
+    {
+        if (n == 2)
+            counter = 1;
+        else if (n == 3)
+            counter = 2;
+        if (((i % 2) != 0) && ((i % 3) != 0))
+            counter++;
+    }
+
+    return counter;
 }
