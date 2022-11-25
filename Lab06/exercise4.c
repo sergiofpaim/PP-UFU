@@ -12,14 +12,14 @@ void main()
         vector[i] = value;
     }
 
-    for (int i = 1; i < 5; ++i)
+    for (int i = 0; i < 5; ++i)
         if (vector[temp1] < vector[i])
             temp1 = i;
 
-    for (int i = 1; i < 5; ++i)
+    for (int i = 0; i < 5; ++i)
         if (vector[temp2] > vector[i])
             temp2 = i;
 
-    printf("O maior numero esta na posicao: %d\n", temp1 + 1);
-    printf("O menor numero esta na posicao: %d\n", temp2 + 1);
+    printf("O maior numero esta na posicao: %d\n", temp1);
+    printf("O menor numero esta na posicao: %d\n", temp2);
 }
