@@ -13,7 +13,7 @@ int main()
         {
             if (vector[i] == vector[j])
             {
-                printf("\nNumero repetido, entre com outro.\n");
+                printf("Numero repetido, entre com outro.\n");
                 i--;
 
                 continue;
@@ -21,8 +21,9 @@ int main()
         }
     }
 
+    printf("Os numeros foram\n");
     for (int i = 0; i < 10; i++)
-        printf("%d\n", vector[i]);
+        printf("%d  ", vector[i]);
 
     return 0;
 }
