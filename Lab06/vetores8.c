@@ -2,7 +2,7 @@
 #include <stdio.h>
 int main()
 {
-    int i, vector[10], j, k;
+    int i, j, vector[10];
 
     printf("Digite 10 numeros inteiros\n");
 
