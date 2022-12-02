@@ -2,15 +2,16 @@
 void main()
 {
     char phrase[50];
+    int i = 0;
     printf("Digite uma frase: ");
     fgets(phrase, 50, stdin);
 
     printf("A frase convertida fica:\n");
 
-    for (int i = 0; i < strlen(phrase) - 1; i++)
+    for (i = 0; i < strlen(phrase) - 2; i++)
         for (int j = i + 1; j < i + 2; j++)
         {
-            if (phrase[i] == 'r')
+            if (phrase[i] == 'r' && phrase[j] != ' ')
             {
                 phrase[i] = 'l';
                 if (phrase[j] == 'r')
@@ -25,4 +26,5 @@ void main()
 
             printf("%c", phrase[i]);
         }
+    printf("%c", phrase[i]);
 }
