@@ -3,7 +3,7 @@
 void main()
 {
     int count = 0;
-    char str[20];
+    char str[10];
     printf("Digite zeros e uns: ");
     gets(str);
 

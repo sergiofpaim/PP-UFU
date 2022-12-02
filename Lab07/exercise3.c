@@ -2,7 +2,7 @@
 #include <string.h>
 void main()
 {
-    char str[20];
+    char str[10];
     printf("Digite uma palavra: ");
     gets(str);
 

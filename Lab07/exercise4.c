@@ -3,7 +3,7 @@
 void main()
 {
     int count = 0;
-    char str[20], chosenChar;
+    char str[10], chosenChar;
     printf("Digite uma palavra: ");
     gets(str);
 
@@ -19,4 +19,5 @@ void main()
 
     printf("\n\nO numero de vogais eh: %d\n", count);
     printf("A palavra convertida eh: %s", str);
+    a
 }
