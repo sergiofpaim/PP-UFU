@@ -11,7 +11,7 @@ void main()
     for (i = 0; i < strlen(phrase) - 2; i++)
         for (int j = i + 1; j < i + 2; j++)
         {
-            if (phrase[i] == 'r' && phrase[j] != ' ')
+            if (phrase[i] == 'r' && phrase[j] >= 65 && phrase[j] <= 122)
             {
                 phrase[i] = 'l';
                 if (phrase[j] == 'r')
