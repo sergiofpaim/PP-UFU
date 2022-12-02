@@ -2,7 +2,7 @@
 #include <string.h>
 void main()
 {
-    char str[30], selectedChar;
+    char str[30];
     printf("Digite uma frase: ");
     gets(str);
 
