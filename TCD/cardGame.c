@@ -76,19 +76,23 @@ void main()
             for (int i = 0; i < 3; i++)
                 printf("%s\n", player[1].cardsN[i]);
 
-            iaChoice = rand() % 3;
+            iaChoice = player[1].cardsV[1];
 
             turn = 0;
         }
 
-        if (playerChoice > iaChoice)
-            highest = 0;
-        else if (iaChoice > playerChoice)
-            highest = 1;
-        else
-            highest = 2;
+        if (roundCount % 2 == 0)
+        {
+            if (playerChoice > iaChoice)
+                highest = 0;
+            else if (iaChoice > playerChoice)
+                highest = 1;
+            else
+                highest = 2;
 
-        checkGame(highest, pW, iaW, rC, t);
+            checkGame(highest, pW, iaW, rC, t);
+        }
+
         roundCount++;
     }
 }
@@ -121,27 +125,25 @@ const char *fillDeckName(int num)
 
 void checkGame(int winner, int *pW, int *iaW, int *rC, int *t)
 {
-    if (*rC % 2 == 0)
+    if (winner == 0)
     {
-        if (winner == 0)
-        {
-            pW++;
-            t = 0;
-        }
-        else if (winner == 1)
-        {
-            iaW++;
-            t = 1;
-        }
-        else
-        {
-            pW++;
-            iaW++;
-        }
-    }
+        *pW++;
+        *t = 0;
 
-    if (*pW >= 2)
-        printf("\n\n\nPlayer ganhou\n\n");
-    else if (*iaW >= 2)
-        printf("\n\n\nIA ganhou\n\n");
+        printf("Player ganhou!");
+    }
+    else if (winner == 1)
+    {
+        *iaW++;
+        *t = 1;
+
+        printf("IA ganhou!");
+    }
+    else
+    {
+        *pW++;
+        *iaW++;
+
+        printf("Empatou!");
+    }
 }
