@@ -4,7 +4,7 @@
 #include <time.h>
 
 int fillDeckValue(int num);
-const char *sorteia(int num);
+const char *fillDeckName(int num);
 // int checkGame(int winner);
 
 struct playerDeck
@@ -38,7 +38,7 @@ void main()
                     {
                         deck[k] = tempNumber;
                         player[i].cardsV[j] = fillDeckValue(tempNumber);
-                        strcpy(player[i].cardsN[j], sorteia(tempNumber));
+                        strcpy(player[i].cardsN[j], fillDeckName(tempNumber));
                     }
                 }
         }
@@ -96,21 +96,21 @@ int fillDeckValue(int num)
     return deckValue[num];
 }
 
-const char *sorteia(int num)
+const char *fillDeckName(int num)
 {
     char *name;
-    char nome_cartas[40][20] = {"Quatro de Ouros", "Quatro de Espada", "Quatro de Copas",
-                                "Cinco de Ouros", "Cinco de Espada", "Cinco de Copas", "Cinco de Paus",
-                                "Seis de Ouros", "Seis de Espada", "Seis de Copas", "Seis de Paus",
-                                "Sete de Espada", "Sete de Paus",
-                                "Dama de Ouros", "Dama de Espada", "Dama de Copas", "Dama de Paus",
-                                "Valete de Ouros", "Valete de Espada", "Valete de Copas", "Valete de Paus",
-                                "Rei de Ouros", "Rei de Espada", "Rei de Copas", "Rei de Paus",
-                                "As de Ouros", "As de Copas", "As de Paus",
-                                "Dois de Ouros", "Dois de Espada", "Dois de Copas", "Dois de Paus",
-                                "Tres de Ouros", "Tres de Espada", "Tres de Copas", "Tres de Paus",
-                                "Sete de Ouros", "Espadilha", "Sete de Copas", "Zap"};
-    name = nome_cartas[num];
+    char cardName[40][20] = {"Quatro de Ouros", "Quatro de Espada", "Quatro de Copas",
+                             "Cinco de Ouros", "Cinco de Espada", "Cinco de Copas", "Cinco de Paus",
+                             "Seis de Ouros", "Seis de Espada", "Seis de Copas", "Seis de Paus",
+                             "Sete de Espada", "Sete de Paus",
+                             "Dama de Ouros", "Dama de Espada", "Dama de Copas", "Dama de Paus",
+                             "Valete de Ouros", "Valete de Espada", "Valete de Copas", "Valete de Paus",
+                             "Rei de Ouros", "Rei de Espada", "Rei de Copas", "Rei de Paus",
+                             "As de Ouros", "As de Copas", "As de Paus",
+                             "Dois de Ouros", "Dois de Espada", "Dois de Copas", "Dois de Paus",
+                             "Tres de Ouros", "Tres de Espada", "Tres de Copas", "Tres de Paus",
+                             "Sete de Ouros", "Espadilha", "Sete de Copas", "Zap"};
+    name = cardName[num];
     return name;
 }
 
