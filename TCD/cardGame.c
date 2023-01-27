@@ -22,6 +22,7 @@ void main()
     int *pW = &playerWins, *iaW = &iaWins, *rC = &roundCount, *t = &turn;
 
     struct playerDeck player[2];
+    turn = rand() % 1;
 
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 3; j++)
@@ -48,15 +49,14 @@ void main()
     while (gameRunning == 1)
     {
         int picked, biggestOnTable, playerChoice, iaChoice, highest;
-        turn = rand() % 1;
 
         if (turn == 0)
         {
-            printf("Escolha a posicao da carta para jogar");
+            printf("Escolha a posicao da carta para jogar\n");
             printf("Suas cartas sao\n\n");
 
             for (int i = 0; i < 3; i++)
-                printf("%s   ", player[0].cardsN[i]);
+                printf("%s\n", player[0].cardsN[i]);
 
             scanf("%d", &picked);
 
@@ -74,7 +74,9 @@ void main()
             printf("\n\nAs cartas do inimigo sao\n\n");
 
             for (int i = 0; i < 3; i++)
-                printf("%s   ", player[1].cardsN[i]);
+                printf("%s\n", player[1].cardsN[i]);
+
+            iaChoice = rand() % 3;
 
             turn = 0;
         }
@@ -137,4 +139,9 @@ void checkGame(int winner, int *pW, int *iaW, int *rC, int *t)
             iaW++;
         }
     }
+
+    if (*pW >= 2)
+        printf("\n\n\nPlayer ganhou\n\n");
+    else if (*iaW >= 2)
+        printf("\n\n\nIA ganhou\n\n");
 }
