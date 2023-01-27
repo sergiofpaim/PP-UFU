@@ -5,7 +5,8 @@
 
 int fillDeckValue(int num);
 const char *fillDeckName(int num);
-// int checkGame(int winner);
+
+void checkGame(int winner, int *pW, int *iaW);
 
 struct playerDeck
 {
@@ -18,6 +19,7 @@ void main()
     srand(time(NULL));
 
     int roundCount = 0, handState = 0, playerWins = 0, iaWins = 0, gameRunning = 1, turn;
+    int *pW = &playerWins, *iaW = &iaWins;
 
     struct playerDeck player[2];
 
@@ -45,12 +47,12 @@ void main()
 
     while (gameRunning == 1)
     {
-        int picked, biggestOnTable, playerChoice, iaChoice, winning;
+        int picked, biggestOnTable, playerChoice, iaChoice, highest;
         turn = rand() % 1;
 
         if (turn == 0)
         {
-            printf("Escolha a posição da carta para jogar");
+            printf("Escolha a posicao da carta para jogar");
             printf("Suas cartas sao\n\n");
 
             for (int i = 0; i < 3; i++)
@@ -78,13 +80,13 @@ void main()
         }
 
         if (playerChoice > iaChoice)
-            winning = 0;
+            highest = 0;
         else if (iaChoice > playerChoice)
-            winning = 1;
+            highest = 1;
         else
-            winning = 2;
+            highest = 2;
 
-        // CheckGame();
+        checkGame(highest, pW, iaW);
     }
 }
 
@@ -114,6 +116,15 @@ const char *fillDeckName(int num)
     return name;
 }
 
-// int checkGame(int winner)
-// {
-// }
+void checkGame(int winner, int *pW, int *iaW)
+{
+    if (winner == 0)
+        pW++;
+    else if (winner == 1)
+        iaW++;
+    else
+    {
+        pW++;
+        iaW++;
+    }
+}
