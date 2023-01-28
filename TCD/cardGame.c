@@ -70,7 +70,7 @@ void main()
             {
                 if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
-                    printf("Escolha a posicao da carta para jogar ou 4 para trucar\n");
+                    printf("Escolha a posicao da carta para jogar ou 4 para trucar/aumentar o truco\n");
                     printf("Suas cartas sao: \n\n");
 
                     for (int i = 0; i < 3; i++)
@@ -114,8 +114,17 @@ void main()
 
                 if (picked == 4)
                 {
-                    printf("Voce trucou");
-                    decideTrick++;
+                    if (trickOn == 0)
+                    {
+                        printf("Voce trucou");
+                        decideTrick++;
+                    }
+                    else
+                    {
+                        trickValue += 3;
+                        printf("Voce aumentou o truco para %d\n", trickValue);
+                        decideTrick -= 2;
+                    }
                 }
                 else
                     printf("\nVoce jogou %s\n\n", player[0].cardsN[picked - 1]);
@@ -138,7 +147,7 @@ void main()
                     else if (picked == 2)
                     {
                         trickValue += 3;
-                        printf("\nSeu oponente aumentou o truco para %d", trickValue);
+                        printf("\nSeu oponente aumentou o truco para %d\n", trickValue);
                     }
                     else
                     {
