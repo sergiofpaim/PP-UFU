@@ -20,7 +20,7 @@ void main()
     srand(time(NULL));
 
     int iaTotalHands = 0, playerTotalHands = 0;
-    int roundCount = 1, gameRunning = 1, handRunning = 1, turn;
+    int roundCount = 0, gameRunning = 1, handRunning = 1, turn;
     int playerWins = 0, iaWins = 0;
     int trickOn = 0, trickedBy = 0;
 
@@ -158,15 +158,16 @@ void main()
 
                 printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[0]);
             }
+            // Game
 
-            if ((roundCount == 2 && trickOn == 0) || (roundCount == 3 && trickOn == 1))
+            roundCount++;
+
+            if ((trickOn == 1 && roundCount == 3) || (roundCount == 2 && trickOn == 0))
             {
                 checkGame(pChoice, iChoice, pW, iaW, rC, t, tOn, tBy, hRun);
 
                 roundCount = 0;
             }
-
-            roundCount++;
         }
     }
 }
@@ -246,6 +247,8 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, i
     *tBy = 0;
     *hRun = 0;
     *tOn = 0;
+    *pChoice = 0;
+    *iChoice = 0;
 }
 
 void trick(int *t, int *rC, int *tOn)
