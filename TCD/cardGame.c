@@ -52,12 +52,25 @@ void main()
 
         if (turn == 0)
         {
+            // Componente de teste para IA
+
             printf("Escolha a posicao da carta para jogar\n");
-            printf("Suas cartas sao\n\n");
+            printf("As cartas do inimigo são: \n\n");
 
             for (int i = 0; i < 3; i++)
-                printf("%s\n", player[0].cardsN[i]);
+                printf("\t[%d] %s\n", i + 1, player[1].cardsN[i]);
 
+            printf("Opcao: 1\n\n");
+
+            // Fim componente de teste para IA
+
+            printf("Escolha a posicao da carta para jogar\n");
+            printf("Suas cartas sao: \n\n");
+
+            for (int i = 0; i < 3; i++)
+                printf("\t[%d] %s\n", i + 1, player[0].cardsN[i]);
+
+            printf("Opcao: ");
             scanf("%d", &picked);
 
             if (picked == 1)
@@ -71,17 +84,17 @@ void main()
         }
         else
         {
-            printf("\n\nAs cartas do inimigo sao\n\n");
+            // printf("\n\nAs cartas do inimigo sao\n\n");
 
-            for (int i = 0; i < 3; i++)
-                printf("%s\n", player[1].cardsN[i]);
+            // for (int i = 0; i < 3; i++)
+            //     printf("%s\n", player[1].cardsN[i]);
 
             iaChoice = player[1].cardsV[1];
 
             turn = 0;
         }
 
-        if (roundCount % 2 == 0)
+        if (roundCount == 2)
         {
             if (playerChoice > iaChoice)
                 highest = 0;
@@ -91,6 +104,8 @@ void main()
                 highest = 2;
 
             checkGame(highest, pW, iaW, rC, t);
+
+            roundCount = 0;
         }
 
         roundCount++;
