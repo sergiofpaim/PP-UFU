@@ -7,7 +7,7 @@ int fillDeckValue(int num);
 const char *fillDeckName(int num);
 
 void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, int *tOn, int *tROn, int *hRun);
-void trick(int *rC, int *tOn);
+void trick(int *t, int *rC, int *tOn);
 
 struct playerDeck
 {
@@ -93,7 +93,7 @@ void main()
 
                     if (picked == 4)
                     {
-                        trick(rC, tOn);
+                        trick(t, rC, tOn);
                         trickedBy = 1;
                     }
 
@@ -159,7 +159,7 @@ void main()
                 printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[0]);
             }
 
-            if (roundCount == 3)
+            if ((roundCount == 2 && trickOn == 0) || (roundCount == 3 && trickOn == 1))
             {
                 checkGame(pChoice, iChoice, pW, iaW, rC, t, tOn, tBy, hRun);
 
@@ -248,8 +248,13 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, i
     *tOn = 0;
 }
 
-void trick(int *rC, int *tOn)
+void trick(int *t, int *rC, int *tOn)
 {
+    if (*t == 1)
+        *t = 0;
+    else
+        *t = 1;
+
     *rC--;
     *tOn = 1;
 }
