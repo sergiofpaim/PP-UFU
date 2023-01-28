@@ -18,7 +18,7 @@ void main()
 {
     srand(time(NULL));
 
-    int roundCount = 0, handState = 0, playerWins = 0, iaWins = 0, gameRunning = 1, turn;
+    int roundCount = 1, handState = 0, playerWins = 0, iaWins = 0, gameRunning = 1, turn;
     int *pW = &playerWins, *iaW = &iaWins, *rC = &roundCount, *t = &turn;
 
     struct playerDeck player[2];
@@ -89,7 +89,7 @@ void main()
             // for (int i = 0; i < 3; i++)
             //     printf("%s\n", player[1].cardsN[i]);
 
-            iaChoice = player[1].cardsV[1];
+            iaChoice = player[1].cardsV[0];
 
             turn = 0;
         }
@@ -145,20 +145,20 @@ void checkGame(int winner, int *pW, int *iaW, int *rC, int *t)
         *pW++;
         *t = 0;
 
-        printf("Player ganhou!");
+        printf("\n\nPlayer ganhou!\n\n");
     }
     else if (winner == 1)
     {
         *iaW++;
         *t = 1;
 
-        printf("IA ganhou!");
+        printf("\n\nIA ganhou!\n\n");
     }
     else
     {
         *pW++;
         *iaW++;
 
-        printf("Empatou!");
+        printf("\n\nEmpatou!\n\n");
     }
 }
