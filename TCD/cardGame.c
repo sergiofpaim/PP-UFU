@@ -5,6 +5,7 @@
 
 int fillDeckValue(int num);
 const char *fillDeckName(int num);
+void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins);
 
 void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV);
 void trick(int *tOn, int *handV, int *dTrick);
@@ -32,10 +33,14 @@ void main()
 
     while (gameRunning == 1)
     {
-        int handValue = 1, picked, biggestOnTable, playerCardRank, iaCardRank, highest, roundCount = 0;
+        int picked, biggestOnTable, playerCardRank, iaCardRank, handValue = 1;
+        int roundCount = 0;
         int decideTrick = 0, trickOn = 0, trickedBy = 0;
-        int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *handV = &handValue, *dTrick = &decideTrick;
-        int *tOn = &trickOn, *tBy = &trickedBy;
+
+        int *pChoice = &playerCardRank, *iChoice = &iaCardRank;
+        int *handV = &handValue;
+        int *tOn = &trickOn, *tBy = &trickedBy, *dTrick = &decideTrick;
+        ;
 
         printf("Jogo\n");
         printf("Player: %d\nIA: %d\n\n", playerWins, iaWins);
@@ -140,8 +145,6 @@ void main()
             // IA
             else
             {
-                turn = 0;
-
                 // Começo teste
                 picked = 2;
                 iaCardRank = player[1].cardsV[picked];
@@ -176,10 +179,12 @@ void main()
                     decideTrick++;
                 }
                 else
-                    printf("\nSeu oponente jogou %s\n", player[1].cardsN[picked]);
-            }
-            // Game
+                    printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[picked]);
 
+                turn = 0;
+            }
+
+            // Game
             if (trickOn == 0 || (trickOn == 1 && decideTrick >= 2))
                 roundCount++;
             // So aumenta o roundcount depois que decidir o truco
@@ -238,9 +243,7 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         }
         // else: Fazer para empate
 
-        *tBy = 0;
-        *tOn = 0;
-        *hRun = 0;
+        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
     else if (*tOn == 0)
     {
@@ -272,9 +275,7 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         else
             *iaW += 1;
 
-        *tBy = 0;
-        *tOn = 0;
-        *hRun = 0;
+        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
 }
 
@@ -290,4 +291,13 @@ void trick(int *tOn, int *handV, int *dTrick)
         *handV += 3;
         *dTrick -= 2;
     }
+}
+
+void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins)
+{
+    *tBy = 0;
+    *tOn = 0;
+    *hRun = 0;
+    *pHWins = 0;
+    *iaHWins = 0;
 }
