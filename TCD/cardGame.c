@@ -63,8 +63,6 @@ void main()
                     exit(1);
             }
 
-            // Tira cartas usadas
-
             handRunning = 1;
 
             for (int i = 0; i < 2; i++)
@@ -110,7 +108,7 @@ void main()
             {
                 if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
-                    printf("Escolha a posicao da carta para jogar ou 4 para trucar/aumentar o truco\n");
+                    printf("Escolha a posicao da carta para jogar ou 4 para trucar o truco\n");
                     printf("Suas cartas sao: \n\n");
 
                     for (int i = 0; i < cardsOnHand; i++)
@@ -171,10 +169,8 @@ void main()
                         else
                             handValue -= 2;
 
-                        printf("\nVoce correu\n");
-                        playerCardRank = -1;
-                        handValue = 1;
-                        checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
+                        printf("\nVoce correu!\n");
+                        iaWins += handValue;
                         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
                     }
                     else
@@ -221,21 +217,15 @@ void main()
                             handValue -= 2;
 
                         printf("Seu oponente correu!\n");
-                        iaCardRank = -1;
-                        handValue = 1;
-                        checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
+                        playerWins += handValue;
                         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
+                        decideTrick++;
                     }
-                    else
+                    else if (picked == 3)
                     {
-                        if (decideTrick < 2)
-                        {
-                            trick(tOn, handV, dTrick);
-                            printf("Seu oponente chamou %d\n", handValue);
-                            roundCount -= 2;
-                        }
-                        else
-                            printf("Nao pode aumentar mais o valor da mao, portanto voce aceitou o truco!\n");
+                        trick(tOn, handV, dTrick);
+                        printf("Seu oponente chamou %d\n", handValue);
+                        roundCount--;
                     }
                     decideTrick++;
                 }
@@ -295,58 +285,63 @@ const char *fillDeckName(int num)
 
 void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV, int *fWin)
 {
+    if (*pChoice > *iChoice)
+    {
+        *pHWins += 1;
+        *t = 0;
+
+        if (*pHWins == 0 && *iaHWins == 0)
+            *fWin = 0;
+
+        printf("\nPlayer ganhou a mao!\n\n");
+    }
+    else if (*pChoice < *iChoice)
+    {
+        *iaHWins += 1;
+        *t = 1;
+
+        if (*pHWins == 0 && *iaHWins == 0)
+            *fWin = 1;
+
+        printf("\nIA ganhou a mao!\n\n");
+    }
+    else
+        printf("\nA mao empatou!\n\n");
+
+    // Trucar
     if (*tOn == 1)
     {
-        if (*pChoice > *iChoice && pHWins == 1 || *iChoice == -1 && pHWins == 1)
+        if ((*pChoice > *iChoice) && *pHWins > 0)
         {
             *t = 0;
             *pW += *handV;
 
             printf("\nPLAYER GANHOU O TRUCO!\n\n");
         }
-        else if (*pChoice < *iChoice && iaHWins == 1 || *pChoice == -1 && iaHWins == 1)
+        else if ((*pChoice < *iChoice) && *iaHWins > 0)
         {
             *t = 1;
             *iaW += *handV;
-            printf("\nIA GANHOU O TRUCO!\n\n");
+            printf("\ne GANHOU O TRUCO!\n\n");
         }
         else
         {
             if (*fWin == 0 && pHWins == 1)
+            {
                 pW += *handV;
+                printf("\ne PLAYER GANHOU O TRUCO!\n\n");
+            }
             else if (*fWin == 1 && iaHWins == 1)
+            {
                 iaW += *handV;
+                printf("\n e GANHOU O TRUCO!\n\n");
+            }
         }
-
         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
-    else if (*tOn == 0)
-    {
-        if (*pChoice > *iChoice)
-        {
-            *pHWins += 1;
-            *t = 0;
 
-            if (*pHWins == 0 && *iaHWins == 0)
-                *fWin = 0;
-
-            printf("\nPlayer ganhou!\n\n");
-        }
-        else if (*pChoice < *iChoice)
-        {
-            *iaHWins += 1;
-            *t = 1;
-
-            if (*pHWins == 0 && *iaHWins == 0)
-                *fWin = 1;
-
-            printf("\nIA ganhou!\n\n");
-        }
-        else
-            printf("\nEmpatou!\n\n");
-    }
-
-    if (*pHWins == 2 || *iaHWins == 2)
+    // Fim de jogo
+    if (*tOn == 0 && *pHWins == 2 || *tOn == 0 && *iaHWins == 2)
     {
         if (*pHWins == 2)
             *pW += 1;
