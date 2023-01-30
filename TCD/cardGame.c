@@ -21,20 +21,20 @@ void main()
 
     int iaTotalHands = 0, playerTotalHands = 0;
     int gameRunning = 1, handRunning = 1, turn;
-    int playerWins = 0, iaWins = 0;
+    int playerWins = 0, iaWins = 0, pHandWins = 0, iaHandWins = 0;
 
     int *pW = &playerWins, *iaW = &iaWins;
     int *t = &turn, *hRun = &handRunning, *gRun = &gameRunning;
+    int *pHWins = &pHandWins, *iaHWins = &iaHandWins;
 
     struct playerDeck player[2];
     turn = rand() % 1;
 
     while (gameRunning == 1)
     {
-        int handValue = 1, picked, biggestOnTable, playerCardRank, iaCardRank, highest, pHandWins = 0, iaHandWins = 0, roundCount = 0;
+        int handValue = 1, picked, biggestOnTable, playerCardRank, iaCardRank, highest, roundCount = 0;
         int decideTrick = 0, trickOn = 0, trickedBy = 0;
         int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *handV = &handValue, *dTrick = &decideTrick;
-        int *pHWins = &pHandWins, *iaHWins = &iaHandWins;
         int *tOn = &trickOn, *tBy = &trickedBy;
 
         printf("Jogo\n");
@@ -65,6 +65,13 @@ void main()
                             }
                         }
                 }
+        }
+        else
+        {
+            if (iaTotalHands >= 12)
+                printf("\n\nIA ganhou o jogo!\n\n");
+            else
+                printf("\n\nVoce ganhou o jogo!\n\n");
         }
 
         while (handRunning == 1)
@@ -169,7 +176,7 @@ void main()
                     decideTrick++;
                 }
                 else
-                    printf("\nSeu oponente jogou %s\n", player[1].cardsN[0]);
+                    printf("\nSeu oponente jogou %s\n", player[1].cardsN[picked]);
             }
             // Game
 
@@ -178,7 +185,10 @@ void main()
             // So aumenta o roundcount depois que decidir o truco
 
             if ((roundCount == 2 && trickOn == 0) || (roundCount == 2 && trickOn == 1))
+            {
                 checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV);
+                roundCount = 0;
+            }
         }
     }
 }
@@ -236,14 +246,14 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
     {
         if (*pChoice > *iChoice)
         {
-            *pHWins++;
+            *pHWins += 1;
             *t += 0;
 
             printf("\nPlayer ganhou!\n\n");
         }
         else if (*pChoice < *iChoice)
         {
-            *iaHWins++;
+            *iaHWins += 1;
             *t = 1;
 
             printf("\nIA ganhou!\n\n");
@@ -258,9 +268,9 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
     if (*pHWins == 2 || *iaHWins == 2)
     {
         if (*pHWins == 2)
-            *pW++;
+            *pW += 1;
         else
-            *iaW++;
+            *iaW += 1;
 
         *tBy = 0;
         *tOn = 0;
