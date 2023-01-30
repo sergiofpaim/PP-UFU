@@ -263,14 +263,14 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
 {
     if (*tOn == 1)
     {
-        if (*pChoice > *iChoice || *iChoice == -1)
+        if (*pChoice > *iChoice && pHWins == 1 || *iChoice == -1 && pHWins == 1)
         {
             *t = 0;
             *pW += *handV;
 
             printf("\nPLAYER GANHOU O TRUCO!\n\n");
         }
-        else if (*pChoice < *iChoice || *pChoice == -1)
+        else if (*pChoice < *iChoice && iaHWins == 1 || *pChoice == -1 && iaHWins == 1)
         {
             *t = 1;
             *iaW += *handV;
@@ -278,9 +278,9 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         }
         else
         {
-            if (*fWin == 0)
+            if (*fWin == 0 && pHWins == 1)
                 pW += *handV;
-            else
+            else if (*fWin == 1 && iaHWins == 1)
                 iaW += *handV;
         }
 
@@ -291,7 +291,7 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         if (*pChoice > *iChoice)
         {
             *pHWins += 1;
-            *t += 0;
+            *t = 0;
 
             if (*pHWins == 0 && *iaHWins == 0)
                 *fWin = 0;
