@@ -293,7 +293,7 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         if (*pHWins == 0 && *iaHWins == 0)
             *fWin = 0;
 
-        printf("\nPlayer ganhou a mao!\n\n");
+        printf("\nPlayer ganhou a mao");
     }
     else if (*pChoice < *iChoice)
     {
@@ -303,10 +303,10 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         if (*pHWins == 0 && *iaHWins == 0)
             *fWin = 1;
 
-        printf("\nIA ganhou a mao!\n\n");
+        printf("\nIA ganhou a mao");
     }
     else
-        printf("\nA mao empatou!\n\n");
+        printf("\nA mao empatou");
 
     // Trucar
     if (*tOn == 1)
@@ -316,25 +316,25 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
             *t = 0;
             *pW += *handV;
 
-            printf("\nPLAYER GANHOU O TRUCO!\n\n");
+            printf(" e GANHOU O TRUCO!\n\n");
         }
         else if ((*pChoice < *iChoice) && *iaHWins > 0)
         {
             *t = 1;
             *iaW += *handV;
-            printf("\ne GANHOU O TRUCO!\n\n");
+            printf(" e GANHOU O TRUCO!\n\n");
         }
         else
         {
             if (*fWin == 0 && pHWins == 1)
             {
                 pW += *handV;
-                printf("\ne PLAYER GANHOU O TRUCO!\n\n");
+                printf(" e o PLAYER GANHOU O TRUCO!\n\n");
             }
             else if (*fWin == 1 && iaHWins == 1)
             {
                 iaW += *handV;
-                printf("\n e GANHOU O TRUCO!\n\n");
+                printf(" e A IA GANHOU O TRUCO!\n\n");
             }
         }
         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
