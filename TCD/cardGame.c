@@ -118,9 +118,9 @@ void main()
                         printf("\nVoce jogou %s\n", player[0].cardsN[picked - 1]);
                     }
                 }
-                else if (trickOn == 1 && trickedBy == 2 && decideTrick < 2)
+                else if (trickOn == 1 && decideTrick < 2)
                 {
-                    printf("Seu oponente trucou, escolha 1 para aceitar, 2 para correr ou 3 para aumentar\n");
+                    printf("Escolha 1 para aceitar o truco, 2 para correr ou 3 para aumentar\n");
                     scanf("%d", &picked);
 
                     if (picked == 1)
@@ -140,8 +140,8 @@ void main()
                     }
                     else
                     {
-                        printf("\nVoce chamou %d\n", handValue);
                         trick(tOn, handV, dTrick);
+                        printf("\nVoce chamou %d\n", handValue);
                     }
                     decideTrick++;
                 }
@@ -151,7 +151,7 @@ void main()
             else
             {
                 // Começo teste
-                picked = (rand() % 4);
+                picked = ((rand() % 4) + 1);
                 iaCardRank = player[1].cardsV[picked];
                 // Final do teste
 
@@ -176,13 +176,19 @@ void main()
                     {
                         if (handValue < 12)
                         {
-                            printf("Seu oponente chamou %d\n", handValue);
                             trick(tOn, handV, dTrick);
+                            printf("Seu oponente chamou %d\n", handValue);
                         }
                         else
                             printf("Nao pode aumentar mais o valor da mao, portanto voce aceitou o truco!\n");
                     }
                     decideTrick++;
+                }
+                else if (picked == 4)
+                {
+                    trick(tOn, handV, dTrick);
+                    trickedBy = 2;
+                    printf("Seu oponente trucou\n");
                 }
                 else
                     printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[picked]);
