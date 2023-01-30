@@ -150,6 +150,7 @@ void main()
                     {
                         trick(tOn, handV, dTrick);
                         printf("\nVoce chamou %d\n", handValue);
+                        roundCount -= 2;
                     }
                     decideTrick++;
                 }
@@ -167,7 +168,7 @@ void main()
                 else
                 {
                     picked = ((rand() % 4) + 1);
-                    iaCardRank = player[1].cardsV[picked];
+                    iaCardRank = player[1].cardsV[picked - 1];
                 }
                 // Final do teste
 
@@ -197,20 +198,21 @@ void main()
                         {
                             trick(tOn, handV, dTrick);
                             printf("Seu oponente chamou %d\n", handValue);
+                            roundCount -= 2;
                         }
                         else
                             printf("Nao pode aumentar mais o valor da mao, portanto voce aceitou o truco!\n");
                     }
                     decideTrick++;
                 }
-                else if (picked == 4)
+                else if (trickOn == 0 && picked == 4)
                 {
                     trick(tOn, handV, dTrick);
                     trickedBy = 2;
                     printf("Seu oponente trucou\n");
                 }
                 else
-                    printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[picked]);
+                    printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[picked - 1]);
 
                 turn = 0;
             }
