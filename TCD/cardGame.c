@@ -101,9 +101,14 @@ void main()
 
                     if (picked == 4)
                     {
-                        trick(tOn, handV, dTrick);
-                        trickedBy = 1;
-                        printf("Voce trucou\n");
+                        if (decideTrick < 2)
+                        {
+                            trick(tOn, handV, dTrick);
+                            trickedBy = 1;
+                            printf("Voce trucou\n");
+                        }
+                        else
+                            printf("Não pode aumentar o truco que voce mesmo pediu\n");
                     }
 
                     else
@@ -124,7 +129,10 @@ void main()
                     scanf("%d", &picked);
 
                     if (picked == 1)
+                    {
                         printf("\nVoce aceitou o truco\n");
+                        decideTrick++;
+                    }
                     else if (picked == 2)
                     {
                         if (handValue > 3)
@@ -151,8 +159,16 @@ void main()
             else
             {
                 // Começo teste
-                picked = ((rand() % 4) + 1);
-                iaCardRank = player[1].cardsV[picked];
+                if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
+                {
+                    picked = ((rand() % 3) + 1);
+                    iaCardRank = player[1].cardsV[picked];
+                }
+                else
+                {
+                    picked = ((rand() % 4) + 1);
+                    iaCardRank = player[1].cardsV[picked];
+                }
                 // Final do teste
 
                 if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
@@ -177,7 +193,7 @@ void main()
                     }
                     else
                     {
-                        if (handValue < 12)
+                        if (decideTrick < 2)
                         {
                             trick(tOn, handV, dTrick);
                             printf("Seu oponente chamou %d\n", handValue);
@@ -315,7 +331,7 @@ void trick(int *tOn, int *handV, int *dTrick)
     else
     {
         *handV += 3;
-        *dTrick -= 2;
+        *dTrick = 0;
     }
 }
 
