@@ -36,6 +36,8 @@ void main()
         int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *tCheck = &trickCheck, *handV = &handValue, *dTrick = &decideTrick;
         int *tOn = &trickOn, *tBy = &trickedBy;
 
+        printf("Player: %d\nIA: %d\n\n", playerWins, iaWins);
+
         if (iaTotalHands < 12 && playerTotalHands < 12)
         {
             handRunning = 1;
@@ -110,6 +112,7 @@ void main()
                         printf("\nVoce correu\n");
                         playerCardRank = -1;
                         trickOn = 0;
+                        checkGame(pChoice, iChoice, pW, iaW, t, tOn, tBy, hRun, handV);
                     }
                     else
                     {
@@ -133,17 +136,25 @@ void main()
                 if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
                 {
                     if (picked == 1)
-                        printf("\nSeu oponente aceitou o truco!\n");
+                        printf("Seu oponente aceitou o truco!\n");
                     else if (picked == 2)
                     {
                         printf("Seu oponente correu!\n");
                         iaCardRank = -1;
                         trickOn = 0;
+                        checkGame(pChoice, iChoice, pW, iaW, t, tOn, tBy, hRun, handV);
                     }
                     else
                     {
-                        printf("\nSeu oponente chamou %d\n", handValue);
-                        trick(tCheck, tOn, handV, dTrick);
+                        if (handValue < 12)
+                        {
+                            printf("Seu oponente chamou %d\n", handValue);
+                            trick(tCheck, tOn, handV, dTrick);
+                        }
+                        else
+                        {
+                            printf("Nao pode aumentar mais o valor da mao, portanto voce aceitou o truco!\n")
+                        }
                     }
                     decideTrick++;
                 }
