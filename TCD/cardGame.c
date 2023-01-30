@@ -6,8 +6,8 @@
 int fillDeckValue(int num);
 const char *fillDeckName(int num);
 
-void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, int *tOn, int *tBy, int *hRun, int *tValue);
-void trick(int *tCheck, int *tOn, int *tValue);
+void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, int *tOn, int *tBy, int *hRun, int *handV);
+void trick(int *tCheck, int *tOn, int *handV);
 
 struct playerDeck
 {
@@ -62,8 +62,8 @@ void main()
 
         while (handRunning == 1)
         {
-            int picked, biggestOnTable, playerCardRank, iaCardRank, highest, trickCheck, trickValue = 3;
-            int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *tCheck = &trickCheck, *tValue = &trickValue;
+            int handValue = 1, picked, biggestOnTable, playerCardRank, iaCardRank, highest, trickCheck;
+            int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *tCheck = &trickCheck, *handV = &handValue;
 
             // Player
             if (turn == 0)
@@ -81,7 +81,7 @@ void main()
 
                     if (picked == 4)
                     {
-                        trick(tCheck, tOn, tValue);
+                        trick(tCheck, tOn, handV);
                         trickedBy = 1;
                     }
 
@@ -95,7 +95,7 @@ void main()
                             playerCardRank = player[0].cardsV[2];
                     }
                 }
-                else if (trickOn == 1 && trickedBy == 2)
+                else if (trickOn == 1 && trickedBy == 2 && decideTrick < 2)
                 {
                     printf("Seu oponente trucou, escolha 1 para aceitar ou 2 para correr\n");
                     scanf("%d", &picked);
@@ -114,7 +114,7 @@ void main()
 
                 if (picked == 4)
                 {
-                    if (trickOn == 0)
+                    if (decideTrick < 2)
                     {
                         printf("Voce trucou");
                         decideTrick++;
@@ -166,7 +166,7 @@ void main()
 
             if ((roundCount == 2 && trickCheck == 0) || (roundCount == 4 && trickCheck == 1))
             {
-                checkGame(pChoice, iChoice, pW, iaW, rC, t, tOn, tBy, hRun, tValue);
+                checkGame(pChoice, iChoice, pW, iaW, rC, t, tOn, tBy, hRun, handV);
 
                 roundCount = 0;
             }
@@ -200,21 +200,21 @@ const char *fillDeckName(int num)
     return name;
 }
 
-void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, int *tOn, int *tBy, int *hRun, int *tValue)
+void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, int *tOn, int *tBy, int *hRun, int *handV)
 {
     if (*tOn == 1)
     {
         if (*pChoice > *iChoice)
         {
             *t = 0;
-            *pW += *tValue;
+            *pW += *handV;
 
             printf("\nPLAYER GANHOU O TRUCO!\n\n");
         }
         else if (*pChoice < *iChoice)
         {
             *t = 1;
-            *iaW += *tValue;
+            *iaW += *handV;
             printf("\nIA GANHOU O TRUCO!\n\n");
         }
         // else: Fazer para empate
@@ -223,22 +223,22 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, i
     {
         if (*pChoice > *iChoice)
         {
-            *pW++;
-            *t = 0;
+            *pW += *handV;
+            *t += 0;
 
             printf("\nPlayer ganhou!\n\n");
         }
         else if (*pChoice < *iChoice)
         {
-            *iaW++;
+            *iaW += *handV;
             *t = 1;
 
             printf("\nIA ganhou!\n\n");
         }
         else
         {
-            *pW++;
-            *iaW++;
+            *pW += *handV;
+            *iaW += *handV;
 
             printf("\nEmpatou!\n\n");
         }
@@ -251,9 +251,15 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *rC, int *t, i
     *iChoice = 0;
 }
 
-void trick(int *tCheck, int *tOn, int *tValue)
+void trick(int *tCheck, int *tOn, int *handV)
 {
-    *tCheck = 1;
-    *tOn = 1;
-    *tValue = 3;
+    if (*tOn == 0)
+    {
+
+        *tCheck = 1;
+        *tOn = 1;
+        *handV = 3;
+    }
+    else
+        *handV += 3;
 }
