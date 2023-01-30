@@ -10,6 +10,8 @@ void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins);
 void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV, int *fWin);
 void trick(int *tOn, int *handV, int *dTrick);
 
+void CardsOfRound(int **p, int line, int column);
+
 struct playerDeck
 {
     int cardsV[3];
@@ -26,6 +28,8 @@ void main()
     int *pW = &playerWins, *iaW = &iaWins;
     int *t = &turn, *hRun = &handRunning, *gRun = &gameRunning;
     int *fWin = &firstWin, *pHWins = &pHandWins, *iaHWins = &iaHandWins;
+
+    int **cardsOfRound, cardsOnHand;
 
     struct playerDeck player[2];
     turn = rand() % 1;
@@ -46,6 +50,21 @@ void main()
 
         if (iaWins < 12 && playerWins < 12)
         {
+
+            cardsOnHand = 3;
+
+            cardsOfRound = (int **)malloc(2 * sizeof(int *));
+            if (cardsOfRound == NULL)
+                exit(1);
+            for (int i = 0; i < 2; i++)
+            {
+                cardsOfRound[i] = (int *)malloc(3 * sizeof(int));
+                if (cardsOfRound[i] == NULL)
+                    exit(1);
+            }
+
+            // Tira cartas usadas
+
             handRunning = 1;
 
             for (int i = 0; i < 2; i++)
@@ -66,6 +85,7 @@ void main()
                                 deck[k] = tempNumber;
                                 player[i].cardsV[j] = fillDeckValue(tempNumber);
                                 strcpy(player[i].cardsN[j], fillDeckName(tempNumber));
+                                cardsOfRound[i][j] = tempNumber;
                             }
                         }
                 }
@@ -93,7 +113,7 @@ void main()
                     printf("Escolha a posicao da carta para jogar ou 4 para trucar/aumentar o truco\n");
                     printf("Suas cartas sao: \n\n");
 
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < cardsOnHand; i++)
                         printf("\t[%d] %s\n", i + 1, player[0].cardsN[i]);
 
                     printf("\nOpcao: ");
@@ -110,15 +130,26 @@ void main()
                         else
                             printf("Não pode aumentar o truco que voce mesmo pediu\n");
                     }
-
                     else
                     {
                         if (picked == 1)
+                        {
                             playerCardRank = player[0].cardsV[0];
+                            CardsOfRound(cardsOfRound, 0, 0);
+                            cardsOnHand--;
+                        }
                         else if (picked == 2)
+                        {
                             playerCardRank = player[0].cardsV[1];
+                            CardsOfRound(cardsOfRound, 0, 1);
+                            cardsOnHand--;
+                        }
                         else if (picked == 3)
+                        {
                             playerCardRank = player[0].cardsV[2];
+                            CardsOfRound(cardsOfRound, 0, 2);
+                            cardsOnHand--;
+                        }
 
                         printf("\nVoce jogou %s\n", player[0].cardsN[picked - 1]);
                     }
@@ -154,6 +185,9 @@ void main()
                     }
                     decideTrick++;
                 }
+                strcpy(player[0].cardsN[0], fillDeckName(cardsOfRound[0][0]));
+                strcpy(player[0].cardsN[1], fillDeckName(cardsOfRound[0][1]));
+
                 turn = 1;
             }
             // IA
@@ -344,4 +378,22 @@ void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins)
     *hRun = 0;
     *pHWins = 0;
     *iaHWins = 0;
+}
+
+void CardsOfRound(int **p, int line, int column)
+{
+    int numberOfcards = 3;
+    int i = column + 1;
+    int sup = column + 2;
+    for (column; column < 3; column++)
+    {
+        i = column + 1;
+        for (i; i < sup; i++)
+        {
+            p[line][column] = p[line][i];
+        }
+        sup++;
+    }
+    --numberOfcards;
+    p = realloc(p, numberOfcards * sizeof(*p));
 }
