@@ -158,7 +158,10 @@ void main()
                 if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
                 {
                     if (picked == 1)
+                    {
                         printf("Seu oponente aceitou o truco!\n");
+                        decideTrick++;
+                    }
                     else if (picked == 2)
                     {
                         if (handValue > 3)
