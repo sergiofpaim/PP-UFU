@@ -20,7 +20,6 @@ void main()
 {
     srand(time(NULL));
 
-    int iaTotalHands = 0, playerTotalHands = 0;
     int gameRunning = 1, handRunning = 1, turn;
     int firstWin, playerWins = 0, iaWins = 0, pHandWins = 0, iaHandWins = 0;
 
@@ -45,7 +44,7 @@ void main()
         printf("Jogo\n");
         printf("Player: %d\nIA: %d\n\n", playerWins, iaWins);
 
-        if (iaTotalHands < 12 && playerTotalHands < 12)
+        if (iaWins < 12 && playerWins < 12)
         {
             handRunning = 1;
 
@@ -73,14 +72,18 @@ void main()
         }
         else
         {
-            if (iaTotalHands >= 12)
+            if (iaWins >= 12)
                 printf("\n\nIA ganhou o jogo!\n\n");
             else
                 printf("\n\nVoce ganhou o jogo!\n\n");
+
+            gameRunning = 0;
         }
 
         while (handRunning == 1)
         {
+            printf("\nValor da mão atual: %d\n\n", handValue);
+
             // Player
             if (turn == 0)
             {
@@ -189,7 +192,6 @@ void main()
             // Game
             if (trickOn == 0 || (trickOn == 1 && decideTrick >= 2))
                 roundCount++;
-            // So aumenta o roundcount depois que decidir o truco
 
             if ((roundCount == 2 && trickOn == 0) || (roundCount == 2 && trickOn == 1))
             {
@@ -265,7 +267,6 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
 
             if (*pHWins == 0 && *iaHWins == 0)
                 *fWin = 0;
-            // Define primeiro ganhador
 
             printf("\nPlayer ganhou!\n\n");
         }
@@ -276,7 +277,6 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
 
             if (*pHWins == 0 && *iaHWins == 0)
                 *fWin = 1;
-            // Define primeiro ganhador
 
             printf("\nIA ganhou!\n\n");
         }
