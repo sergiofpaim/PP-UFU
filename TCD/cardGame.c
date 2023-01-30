@@ -83,7 +83,7 @@ void main()
                     {
                         trick(tCheck, tOn, handV, dTrick);
                         trickedBy = 1;
-                        printf("Voce trucou");
+                        printf("Voce trucou\n");
                     }
 
                     else
@@ -104,16 +104,16 @@ void main()
                     scanf("%d", &picked);
 
                     if (picked == 1)
-                        printf("\nVoce aceitou o truco");
+                        printf("\nVoce aceitou o truco\n");
                     else if (picked == 2)
                     {
-                        printf("\nVoce correu");
+                        printf("\nVoce correu\n");
                         playerCardRank = -1;
                         trickOn = 0;
                     }
                     else
                     {
-                        printf("\nVoce chamou %d", handValue);
+                        printf("\nVoce chamou %d\n", handValue);
                         trick(tCheck, tOn, handV, dTrick);
                     }
                     decideTrick++;
@@ -133,16 +133,16 @@ void main()
                 if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
                 {
                     if (picked == 1)
-                        printf("\nSeu oponente aceitou o truco");
+                        printf("\nSeu oponente aceitou o truco!\n");
                     else if (picked == 2)
                     {
-                        printf("Seu oponente correu!");
+                        printf("Seu oponente correu!\n");
                         iaCardRank = -1;
                         trickOn = 0;
                     }
                     else
                     {
-                        printf("\nSeu oponente chamou %d", handValue);
+                        printf("\nSeu oponente chamou %d\n", handValue);
                         trick(tCheck, tOn, handV, dTrick);
                     }
                     decideTrick++;
