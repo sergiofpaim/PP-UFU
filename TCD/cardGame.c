@@ -7,7 +7,7 @@ int fillDeckValue(int num);
 const char *fillDeckName(int num);
 void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins);
 
-void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV);
+void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV, int *fWin);
 void trick(int *tOn, int *handV, int *dTrick);
 
 struct playerDeck
@@ -22,11 +22,11 @@ void main()
 
     int iaTotalHands = 0, playerTotalHands = 0;
     int gameRunning = 1, handRunning = 1, turn;
-    int playerWins = 0, iaWins = 0, pHandWins = 0, iaHandWins = 0;
+    int firstWin, playerWins = 0, iaWins = 0, pHandWins = 0, iaHandWins = 0;
 
     int *pW = &playerWins, *iaW = &iaWins;
     int *t = &turn, *hRun = &handRunning, *gRun = &gameRunning;
-    int *pHWins = &pHandWins, *iaHWins = &iaHandWins;
+    int *fWin = &firstWin, *pHWins = &pHandWins, *iaHWins = &iaHandWins;
 
     struct playerDeck player[2];
     turn = rand() % 1;
@@ -130,8 +130,9 @@ void main()
 
                         printf("\nVoce correu\n");
                         playerCardRank = -1;
-                        trickOn = 0;
-                        checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV);
+                        handValue = 1;
+                        checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
+                        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
                     }
                     else
                     {
@@ -163,8 +164,9 @@ void main()
 
                         printf("Seu oponente correu!\n");
                         iaCardRank = -1;
-                        trickOn = 0;
-                        checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV);
+                        handValue = 1;
+                        checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
+                        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
                     }
                     else
                     {
@@ -191,7 +193,7 @@ void main()
 
             if ((roundCount == 2 && trickOn == 0) || (roundCount == 2 && trickOn == 1))
             {
-                checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV);
+                checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
                 roundCount = 0;
             }
         }
@@ -224,24 +226,30 @@ const char *fillDeckName(int num)
     return name;
 }
 
-void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV)
+void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV, int *fWin)
 {
     if (*tOn == 1)
     {
-        if (*pChoice > *iChoice)
+        if (*pChoice > *iChoice || *iChoice == -1)
         {
             *t = 0;
             *pW += *handV;
 
             printf("\nPLAYER GANHOU O TRUCO!\n\n");
         }
-        else if (*pChoice < *iChoice)
+        else if (*pChoice < *iChoice || *pChoice == -1)
         {
             *t = 1;
             *iaW += *handV;
             printf("\nIA GANHOU O TRUCO!\n\n");
         }
-        // else: Fazer para empate
+        else
+        {
+            if (*fWin == 0)
+                pW += *handV;
+            else
+                iaW += *handV;
+        }
 
         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
@@ -252,12 +260,20 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
             *pHWins += 1;
             *t += 0;
 
+            if (*pHWins == 0 && *iaHWins == 0)
+                *fWin = 0;
+            // Define primeiro ganhador
+
             printf("\nPlayer ganhou!\n\n");
         }
         else if (*pChoice < *iChoice)
         {
             *iaHWins += 1;
             *t = 1;
+
+            if (*pHWins == 0 && *iaHWins == 0)
+                *fWin = 1;
+            // Define primeiro ganhador
 
             printf("\nIA ganhou!\n\n");
         }
