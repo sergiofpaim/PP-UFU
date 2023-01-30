@@ -195,6 +195,9 @@ void main()
             {
                 checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
                 roundCount = 0;
+
+                printf("Mao da Vez\n");
+                printf("Player: %d\nIA: %d\n\n", *pHWins, *iaHWins);
             }
         }
     }
@@ -279,9 +282,6 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         }
         else
             printf("\nEmpatou!\n\n");
-
-        printf("Mao da Vez\n");
-        printf("Player: %d\nIA: %d\n\n", *pHWins, *iaHWins);
     }
 
     if (*pHWins == 2 || *iaHWins == 2)
