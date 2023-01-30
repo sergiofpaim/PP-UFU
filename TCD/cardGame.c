@@ -31,6 +31,11 @@ void main()
 
     while (gameRunning == 1)
     {
+        int handValue = 1, picked, biggestOnTable, playerCardRank, iaCardRank, highest, trickCheck, roundCount = 0;
+        int decideTrick = 0, trickOn = 0, trickedBy = 0;
+        int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *tCheck = &trickCheck, *handV = &handValue, *dTrick = &decideTrick;
+        int *tOn = &trickOn, *tBy = &trickedBy;
+
         if (iaTotalHands < 12 && playerTotalHands < 12)
         {
             handRunning = 1;
@@ -60,11 +65,6 @@ void main()
 
         while (handRunning == 1)
         {
-            int handValue = 1, picked, biggestOnTable, playerCardRank, iaCardRank, highest, trickCheck, roundCount = 0;
-            int decideTrick = 0, trickOn = 0, trickedBy = 0;
-            int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *tCheck = &trickCheck, *handV = &handValue, *dTrick = &decideTrick;
-            int *tOn = &trickOn, *tBy = &trickedBy;
-
             // Player
             if (turn == 0)
             {
@@ -152,7 +152,7 @@ void main()
             }
             // Game
 
-            if (decideTrick >= 2)
+            if (trickCheck == 0 || (trickCheck == 1 && decideTrick >= 2))
                 roundCount++;
             // So aumenta o roundcount depois que decidir o truco
 
