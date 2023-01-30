@@ -82,7 +82,8 @@ void main()
 
         while (handRunning == 1)
         {
-            printf("\nValor da mão atual: %d\n\n", handValue);
+            printf("\n_________________________________________________________________");
+            printf("\n\nValor da mão atual: %d\n\n", handValue);
 
             // Player
             if (turn == 0)
@@ -150,7 +151,7 @@ void main()
             else
             {
                 // Começo teste
-                picked = 2;
+                picked = (rand() % 4);
                 iaCardRank = player[1].cardsV[picked];
                 // Final do teste
 
