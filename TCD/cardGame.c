@@ -45,7 +45,7 @@ void main()
         int *tOn = &trickOn, *tBy = &trickedBy, *dTrick = &decideTrick;
         ;
 
-        printf("Jogo\n");
+        printf("\n\nJogo\n");
         printf("Player: %d\nIA: %d\n\n", playerWins, iaWins);
 
         if (iaWins < 12 && playerWins < 12)
@@ -250,7 +250,7 @@ void main()
                 checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
                 roundCount = 0;
 
-                printf("Mao da Vez\n");
+                printf("\n\nMao da Vez\n");
                 printf("Player: %d\nIA: %d\n\n", *pHWins, *iaHWins);
             }
         }
@@ -311,33 +311,36 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
     // Trucar
     if (*tOn == 1)
     {
-        if ((*pChoice > *iChoice) && *pHWins > 0)
+        if ((*pChoice > *iChoice) && *pHWins > 1)
         {
             *t = 0;
             *pW += *handV;
 
             printf(" e GANHOU O TRUCO!\n\n");
+            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
-        else if ((*pChoice < *iChoice) && *iaHWins > 0)
+        else if ((*pChoice < *iChoice) && *iaHWins > 1)
         {
             *t = 1;
             *iaW += *handV;
             printf(" e GANHOU O TRUCO!\n\n");
+            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
         else
         {
-            if (*fWin == 0 && pHWins == 1)
+            if (*fWin == 0 && *pHWins == 1)
             {
                 pW += *handV;
                 printf(" e o PLAYER GANHOU O TRUCO!\n\n");
+                closeGame(tBy, tOn, hRun, pHWins, iaHWins);
             }
-            else if (*fWin == 1 && iaHWins == 1)
+            else if (*fWin == 1 && *iaHWins == 1)
             {
                 iaW += *handV;
                 printf(" e A IA GANHOU O TRUCO!\n\n");
+                closeGame(tBy, tOn, hRun, pHWins, iaHWins);
             }
         }
-        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
 
     // Fim de jogo
@@ -384,9 +387,7 @@ void CardsOfRound(int **p, int line, int column)
     {
         i = column + 1;
         for (i; i < sup; i++)
-        {
             p[line][column] = p[line][i];
-        }
         sup++;
     }
     --numberOfcards;
