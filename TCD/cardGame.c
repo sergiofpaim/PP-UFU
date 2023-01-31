@@ -3,14 +3,13 @@
 #include <string.h>
 #include <time.h>
 
+void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins);
 int fillDeckValue(int num);
 const char *fillDeckName(int num);
-void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins);
+void CardsOfRound(int **p, int line, int column);
 
 void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV, int *fWin);
 void trick(int *tOn, int *handV, int *dTrick, int *rC, int *callTrick);
-
-void CardsOfRound(int **p, int line, int column);
 
 struct playerDeck
 {
@@ -28,7 +27,6 @@ void main()
     int *pW = &playerWins, *iaW = &iaWins;
     int *t = &turn, *hRun = &handRunning, *gRun = &gameRunning;
     int *pHWins = &pHandWins, *iaHWins = &iaHandWins;
-
     int **cardsOfRound, cardsOnHand;
 
     struct playerDeck player[2];
@@ -43,14 +41,12 @@ void main()
         int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *fWin = &firstWin;
         int *handV = &handValue, *rC = &roundCount;
         int *tOn = &trickOn, *tBy = &trickedBy, *dTrick = &decideTrick, *callTrick = &callingTrick;
-        ;
 
         printf("\n\nJogo\n");
         printf("Player: %d\nIA: %d\n\n", playerWins, iaWins);
 
         if (iaWins < 12 && playerWins < 12)
         {
-
             handRunning = 1;
             cardsOnHand = 3;
 
@@ -63,7 +59,6 @@ void main()
                 if (cardsOfRound[i] == NULL)
                     exit(1);
             }
-
             for (int i = 0; i < 2; i++)
                 for (int j = 0; j < 3; j++)
                 {
@@ -160,7 +155,6 @@ void main()
                     while (decisionMade == 0)
                     {
                         decisionMade = 1;
-
                         if (picked == 1)
                             printf("\nVoce aceitou o truco\n");
 
@@ -209,7 +203,6 @@ void main()
                     if (player[1].cardsV[i] < lowest)
                         lowest = player[1].cardsV[i];
 
-                // Mecanica
                 if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
                     int decisionMade = 0;
@@ -290,7 +283,6 @@ void main()
                         }
                         else
                         {
-
                             if (handValue < 11)
                             {
                                 trick(tOn, handV, dTrick, rC, callTrick);
@@ -313,14 +305,10 @@ void main()
                 printf("\n\nMao da Vez\n");
                 printf("Player: %d\nIA: %d\n\n", *pHWins, *iaHWins);
             }
-
-            printf("\n\n%d\n\n", playerCardRank);
-            printf("\n\n%d\n\n", iaCardRank);
         }
 
         for (int i = 0; i < 2; i++)
             free(cardsOfRound[i]);
-
         free(cardsOfRound);
     }
 }
@@ -374,49 +362,49 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         printf("\nIA ganhou a mao");
     }
     else
+    {
         printf("\nA mao empatou");
+        *pHWins += 1;
+        *iaHWins += 1;
+    }
 
     // Trucar
-    if (*tOn == 1)
+    if (*tOn == 1 && *pHWins > 1 || *tOn == 1 && *iaHWins > 1)
     {
-        if ((*pChoice > *iChoice) && *pHWins > 1)
+        if ((*pChoice > *iChoice && *pHWins > 1))
         {
             *t = 0;
             *pW += *handV;
-
             printf(" e GANHOU O TRUCO!\n\n");
-            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
         else if ((*pChoice < *iChoice) && *iaHWins > 1)
         {
             *t = 1;
             *iaW += *handV;
             printf(" e GANHOU O TRUCO!\n\n");
-            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
-
-        if (*tOn == 1 && *fWin == 0 && *pHWins == 1)
-        {
-            pW += *handV;
-            printf(" e o PLAYER GANHOU O TRUCO!\n\n");
-            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
-        }
-        else if (*tOn == 1 && *fWin == 1 && *iaHWins == 1)
-        {
-            iaW += *handV;
-            printf(" e A IA GANHOU O TRUCO!\n\n");
-            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
-        }
+        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
 
     // Fim de jogo
     if (*tOn == 0 && *pHWins == 2 || *tOn == 0 && *iaHWins == 2)
     {
-        if (*pHWins == 2)
-            *pW += 1;
-        else
-            *iaW += 1;
+        if (*pW == 3 && *iaW == 3)
+            printf("Empate no jogo!");
 
+        else if (*pHWins == *iaHWins && *fWin != -1)
+        {
+            if (*fWin == 0)
+            {
+                printf("Player ganhou o empate pela primeira rodada");
+                *pW += 1;
+            }
+            if (*fWin == 1)
+            {
+                printf("IA ganhou o empate pela primeira rodada");
+                *iaW += 1;
+            }
+        }
         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
 }
