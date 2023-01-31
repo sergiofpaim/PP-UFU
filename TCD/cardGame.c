@@ -212,57 +212,66 @@ void main()
                 // Mecanica
                 if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
-                    int randomTrick = rand() % 10;
-
-                    if (randomTrick > 8)
-                        picked = 4;
-
-                    if (picked == 4)
+                    int decisionMade = 0;
+                    while (decisionMade == 0)
                     {
-                        trick(tOn, handV, dTrick, rC, callTrick);
-                        printf("IA trucou\n");
-                        trickedBy = 1;
-                        decideTrick++;
-                    }
-                    else
-                    {
-                        if (trickOn == 0)
+                        decisionMade = 1;
+                        int randomTrick = rand() % 10;
+
+                        if (randomTrick > 8 && trickOn == 1)
+                            decisionMade = 0;
+                        else if (randomTrick > 8 && trickOn == 0)
+                            picked = 4;
+
+                        if (picked == 4)
                         {
-                            if (pHandWins == iaHandWins || pHandWins > iaHandWins)
-                                iaCardRank = highest;
-                            else if (pHandWins < iaHandWins)
-                                iaCardRank = lowest;
+                            trick(tOn, handV, dTrick, rC, callTrick);
+                            printf("IA trucou\n");
+                            trickedBy = 1;
+                            decideTrick++;
                         }
                         else
                         {
-                            if (lowest > playerCardRank || pHandWins < iaHandWins)
-                                iaCardRank = lowest;
+                            if (trickOn == 0)
+                            {
+                                if (pHandWins == iaHandWins || pHandWins > iaHandWins)
+                                    iaCardRank = highest;
+                                else if (pHandWins < iaHandWins)
+                                    iaCardRank = lowest;
+                            }
                             else
-                                iaCardRank = highest;
+                            {
+                                if (lowest > playerCardRank || pHandWins < iaHandWins)
+                                    iaCardRank = lowest;
+                                else
+                                    iaCardRank = highest;
+                            }
+
+                            for (int i = 0; i < cardsOnHand; i++)
+                                if (iaCardRank == i)
+                                    picked = i + 1;
+
+                            printf("\nIA jogou %s\n", player[1].cardsN[picked - 1]);
+
+                            if (picked == 1)
+                                CardsOfRound(cardsOfRound, 1, 0);
+                            else if (picked == 2)
+                                CardsOfRound(cardsOfRound, 1, 1);
+                            else if (picked == 3)
+                                CardsOfRound(cardsOfRound, 1, 2);
+
+                            roundCount++;
                         }
-
-                        for (int i = 0; i < cardsOnHand; i++)
-                            if (iaCardRank == i)
-                                picked = i + 1;
-
-                        if (picked == 1)
-                            CardsOfRound(cardsOfRound, 1, 0);
-                        else if (picked == 2)
-                            CardsOfRound(cardsOfRound, 1, 1);
-                        else if (picked == 3)
-                            CardsOfRound(cardsOfRound, 1, 2);
-
-                        printf("\nIA jogou %s\n", player[1].cardsN[picked - 1]);
-                        roundCount++;
+                        strcpy(player[1].cardsN[0], fillDeckName(cardsOfRound[1][0]));
+                        strcpy(player[1].cardsN[1], fillDeckName(cardsOfRound[1][1]));
                     }
-                    strcpy(player[1].cardsN[0], fillDeckName(cardsOfRound[1][0]));
-                    strcpy(player[1].cardsN[1], fillDeckName(cardsOfRound[1][1]));
                 }
                 else if (trickOn == 1 && decideTrick < 2)
                 {
                     int decisionMade = 0;
                     while (decisionMade == 0)
                     {
+                        picked = rand() % 3;
                         decisionMade = 1;
 
                         if (picked == 1)
@@ -282,7 +291,7 @@ void main()
                         else
                         {
 
-                            if (handValue < 12)
+                            if (handValue < 11)
                             {
                                 trick(tOn, handV, dTrick, rC, callTrick);
                                 printf("\nIA chamou %d\n", handValue);
