@@ -366,6 +366,7 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         printf("\nA mao empatou");
         *pHWins += 1;
         *iaHWins += 1;
+        *t = 1;
     }
 
     // Trucar
@@ -405,6 +406,11 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
                 *iaW += 1;
             }
         }
+        else if (*pHWins == 2)
+            *pW += 1;
+        else if (*iaHWins == 2)
+            *iaW += 1;
+
         closeGame(tBy, tOn, hRun, pHWins, iaHWins);
     }
 }
