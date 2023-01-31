@@ -8,7 +8,7 @@ const char *fillDeckName(int num);
 void closeGame(int *tBy, int *tOn, int *hRun, int *pHWins, int *iaHWins);
 
 void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *iaHWins, int *t, int *tOn, int *tBy, int *hRun, int *handV, int *fWin);
-void trick(int *tOn, int *handV, int *dTrick);
+void trick(int *tOn, int *handV, int *dTrick, int *rC, int *callTrick);
 
 void CardsOfRound(int **p, int line, int column);
 
@@ -23,11 +23,11 @@ void main()
     srand(time(NULL));
 
     int gameRunning = 1, handRunning = 1, turn;
-    int firstWin, playerWins = 0, iaWins = 0, pHandWins = 0, iaHandWins = 0;
+    int playerWins = 0, iaWins = 0, pHandWins = 0, iaHandWins = 0;
 
     int *pW = &playerWins, *iaW = &iaWins;
     int *t = &turn, *hRun = &handRunning, *gRun = &gameRunning;
-    int *fWin = &firstWin, *pHWins = &pHandWins, *iaHWins = &iaHandWins;
+    int *pHWins = &pHandWins, *iaHWins = &iaHandWins;
 
     int **cardsOfRound, cardsOnHand;
 
@@ -36,13 +36,13 @@ void main()
 
     while (gameRunning == 1)
     {
-        int picked, biggestOnTable, playerCardRank, iaCardRank, handValue = 1;
+        int picked, biggestOnTable, playerCardRank, iaCardRank, handValue = 1, firstWin = -1;
         int roundCount = 0;
-        int decideTrick = 0, trickOn = 0, trickedBy = 0;
+        int callingTrick = 0, decideTrick = 0, trickOn = 0, trickedBy = 0;
 
-        int *pChoice = &playerCardRank, *iChoice = &iaCardRank;
-        int *handV = &handValue;
-        int *tOn = &trickOn, *tBy = &trickedBy, *dTrick = &decideTrick;
+        int *pChoice = &playerCardRank, *iChoice = &iaCardRank, *fWin = &firstWin;
+        int *handV = &handValue, *rC = &roundCount;
+        int *tOn = &trickOn, *tBy = &trickedBy, *dTrick = &decideTrick, *callTrick = &callingTrick;
         ;
 
         printf("\n\nJogo\n");
@@ -51,6 +51,7 @@ void main()
         if (iaWins < 12 && playerWins < 12)
         {
 
+            handRunning = 1;
             cardsOnHand = 3;
 
             cardsOfRound = (int **)malloc(2 * sizeof(int *));
@@ -62,8 +63,6 @@ void main()
                 if (cardsOfRound[i] == NULL)
                     exit(1);
             }
-
-            handRunning = 1;
 
             for (int i = 0; i < 2; i++)
                 for (int j = 0; j < 3; j++)
@@ -108,8 +107,10 @@ void main()
             {
                 if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
-                    printf("Escolha a posicao da carta para jogar ou 4 para trucar o truco\n");
-                    printf("Suas cartas sao: \n\n");
+                    printf("Escolha a posicao da carta para jogar");
+                    if (trickOn == 0)
+                        printf(" ou 4 para trucar o truco\n");
+                    printf("\nSuas cartas sao: \n\n");
 
                     for (int i = 0; i < cardsOnHand; i++)
                         printf("\t[%d] %s\n", i + 1, player[0].cardsN[i]);
@@ -119,14 +120,11 @@ void main()
 
                     if (picked == 4)
                     {
-                        if (decideTrick < 2)
-                        {
-                            trick(tOn, handV, dTrick);
-                            trickedBy = 1;
-                            printf("Voce trucou\n");
-                        }
-                        else
-                            printf("Não pode aumentar o truco que voce mesmo pediu\n");
+                        trick(tOn, handV, dTrick, rC, callTrick);
+                        printf("Voce trucou\n");
+                        trickedBy = 1;
+                        decideTrick++;
+                        callingTrick = 1;
                     }
                     else
                     {
@@ -150,34 +148,46 @@ void main()
                         }
 
                         printf("\nVoce jogou %s\n", player[0].cardsN[picked - 1]);
+                        roundCount++;
                     }
                 }
                 else if (trickOn == 1 && decideTrick < 2)
                 {
+                    int decisionMade = 0;
+
                     printf("Escolha 1 para aceitar o truco, 2 para correr ou 3 para aumentar\n");
                     scanf("%d", &picked);
+                    while (decisionMade == 0)
+                    {
+                        decisionMade = 1;
 
-                    if (picked == 1)
-                    {
-                        printf("\nVoce aceitou o truco\n");
-                        decideTrick++;
-                    }
-                    else if (picked == 2)
-                    {
-                        if (handValue > 3)
-                            handValue -= 3;
+                        if (picked == 1)
+                            printf("\nVoce aceitou o truco\n");
+
+                        else if (picked == 2)
+                        {
+                            if (handValue > 3)
+                                handValue -= 3;
+                            else
+                                handValue -= 2;
+
+                            printf("\nVoce correu!\n");
+                            iaWins += handValue;
+                            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
+                        }
                         else
-                            handValue -= 2;
-
-                        printf("\nVoce correu!\n");
-                        iaWins += handValue;
-                        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
-                    }
-                    else
-                    {
-                        trick(tOn, handV, dTrick);
-                        printf("\nVoce chamou %d\n", handValue);
-                        roundCount -= 2;
+                        {
+                            if (handValue < 12)
+                            {
+                                trick(tOn, handV, dTrick, rC, callTrick);
+                                printf("\nVoce chamou %d\n", handValue);
+                            }
+                            else
+                            {
+                                decisionMade = 0;
+                                printf("Não pode pedir para aumentar");
+                            }
+                        }
                     }
                     decideTrick++;
                 }
@@ -189,63 +199,104 @@ void main()
             // IA
             else
             {
-                // Começo teste
-                if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
-                {
-                    picked = ((rand() % 3) + 1);
-                    iaCardRank = player[1].cardsV[picked];
-                }
-                else
-                {
-                    picked = ((rand() % 4) + 1);
-                    iaCardRank = player[1].cardsV[picked - 1];
-                }
-                // Final do teste
+                int highest = player[1].cardsV[0], lowest = player[1].cardsV[0];
 
-                if (trickOn == 1 && trickedBy == 1 && decideTrick < 2)
+                for (int i = 0; i < cardsOnHand; i++)
+                    if (player[1].cardsV[i] > highest)
+                        highest = player[1].cardsV[i];
+
+                for (int i = 0; i < cardsOnHand; i++)
+                    if (player[1].cardsV[i] < lowest)
+                        lowest = player[1].cardsV[i];
+
+                // Mecanica
+                if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
-                    if (picked == 1)
+                    int randomTrick = rand() % 10;
+
+                    if (randomTrick > 8)
+                        picked = 4;
+
+                    if (picked == 4)
                     {
-                        printf("Seu oponente aceitou o truco!\n");
+                        trick(tOn, handV, dTrick, rC, callTrick);
+                        printf("IA trucou\n");
+                        trickedBy = 1;
                         decideTrick++;
                     }
-                    else if (picked == 2)
+                    else
                     {
-                        if (handValue > 3)
-                            handValue -= 3;
+                        if (trickOn == 0)
+                        {
+                            if (pHandWins == iaHandWins || pHandWins > iaHandWins)
+                                iaCardRank = highest;
+                            else if (pHandWins < iaHandWins)
+                                iaCardRank = lowest;
+                        }
                         else
-                            handValue -= 2;
+                        {
+                            if (lowest > playerCardRank || pHandWins < iaHandWins)
+                                iaCardRank = lowest;
+                            else if (pHandWins > iaHandWins)
+                                iaCardRank = highest;
+                        }
 
-                        printf("Seu oponente correu!\n");
-                        playerWins += handValue;
-                        closeGame(tBy, tOn, hRun, pHWins, iaHWins);
-                        decideTrick++;
+                        for (int i = 0; i < cardsOnHand; i++)
+                            if (iaCardRank == i)
+                                picked = i + 1;
+
+                        if (picked == 1)
+                            CardsOfRound(cardsOfRound, 1, 0);
+                        else if (picked == 2)
+                            CardsOfRound(cardsOfRound, 1, 1);
+                        else if (picked == 3)
+                            CardsOfRound(cardsOfRound, 1, 2);
+
+                        printf("\nIA jogou %s\n", player[1].cardsN[picked - 1]);
+                        roundCount++;
                     }
-                    else if (picked == 3)
+                    strcpy(player[1].cardsN[0], fillDeckName(cardsOfRound[1][0]));
+                    strcpy(player[1].cardsN[1], fillDeckName(cardsOfRound[1][1]));
+                }
+                else if (trickOn == 1 && decideTrick < 2)
+                {
+                    int decisionMade = 0;
+                    while (decisionMade == 0)
                     {
-                        trick(tOn, handV, dTrick);
-                        printf("Seu oponente chamou %d\n", handValue);
-                        roundCount--;
+                        decisionMade = 1;
+
+                        if (picked == 1)
+                            printf("\nIA aceitou o truco\n");
+
+                        else if (picked == 2)
+                        {
+                            if (handValue > 3)
+                                handValue -= 3;
+                            else
+                                handValue -= 2;
+
+                            printf("\nIA correu!\n");
+                            playerWins += handValue;
+                            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
+                        }
+                        else
+                        {
+
+                            if (handValue < 12)
+                            {
+                                trick(tOn, handV, dTrick, rC, callTrick);
+                                printf("\nIA chamou %d\n", handValue);
+                            }
+                            else
+                                decisionMade = 0;
+                        }
                     }
                     decideTrick++;
                 }
-                else if (trickOn == 0 && picked == 4)
-                {
-                    trick(tOn, handV, dTrick);
-                    trickedBy = 2;
-                    printf("Seu oponente trucou\n");
-                }
-                else
-                    printf("\nSeu oponente jogou %s\n\n", player[1].cardsN[picked - 1]);
-
                 turn = 0;
             }
 
-            // Game
-            if (trickOn == 0 || (trickOn == 1 && decideTrick >= 2))
-                roundCount++;
-
-            if ((roundCount == 2 && trickOn == 0) || (roundCount == 2 && trickOn == 1))
+            if (roundCount == 2)
             {
                 checkGame(pChoice, iChoice, pW, iaW, pHWins, iaHWins, t, tOn, tBy, hRun, handV, fWin);
                 roundCount = 0;
@@ -253,7 +304,15 @@ void main()
                 printf("\n\nMao da Vez\n");
                 printf("Player: %d\nIA: %d\n\n", *pHWins, *iaHWins);
             }
+
+            printf("\n\n%d\n\n", playerCardRank);
+            printf("\n\n%d\n\n", iaCardRank);
         }
+
+        for (int i = 0; i < 2; i++)
+            free(cardsOfRound[i]);
+
+        free(cardsOfRound);
     }
 }
 
@@ -326,20 +385,19 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
             printf(" e GANHOU O TRUCO!\n\n");
             closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
-        else
+
+        // Empate truco
+        if (*tOn == 1 && *fWin == 0 && *pHWins == 1)
         {
-            if (*fWin == 0 && *pHWins == 1)
-            {
-                pW += *handV;
-                printf(" e o PLAYER GANHOU O TRUCO!\n\n");
-                closeGame(tBy, tOn, hRun, pHWins, iaHWins);
-            }
-            else if (*fWin == 1 && *iaHWins == 1)
-            {
-                iaW += *handV;
-                printf(" e A IA GANHOU O TRUCO!\n\n");
-                closeGame(tBy, tOn, hRun, pHWins, iaHWins);
-            }
+            pW += *handV;
+            printf(" e o PLAYER GANHOU O TRUCO!\n\n");
+            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
+        }
+        else if (*tOn == 1 && *fWin == 1 && *iaHWins == 1)
+        {
+            iaW += *handV;
+            printf(" e A IA GANHOU O TRUCO!\n\n");
+            closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
     }
 
@@ -355,7 +413,7 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
     }
 }
 
-void trick(int *tOn, int *handV, int *dTrick)
+void trick(int *tOn, int *handV, int *dTrick, int *rC, int *callTrick)
 {
     if (*tOn == 0)
     {
@@ -366,6 +424,11 @@ void trick(int *tOn, int *handV, int *dTrick)
     {
         *handV += 3;
         *dTrick = 0;
+    }
+    if (*callTrick == 1)
+    {
+        *callTrick = 0;
+        *rC = 0;
     }
 }
 
