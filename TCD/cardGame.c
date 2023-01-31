@@ -205,7 +205,7 @@ void main()
                     if (player[1].cardsV[i] > highest)
                         highest = player[1].cardsV[i];
 
-                for (int i = 0; i < cardsOnHand; i++)
+                for (int i = 0; i <= cardsOnHand; i++)
                     if (player[1].cardsV[i] < lowest)
                         lowest = player[1].cardsV[i];
 
@@ -237,7 +237,7 @@ void main()
                         {
                             if (lowest > playerCardRank || pHandWins < iaHandWins)
                                 iaCardRank = lowest;
-                            else if (pHandWins > iaHandWins)
+                            else
                                 iaCardRank = highest;
                         }
 
@@ -386,7 +386,6 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
             closeGame(tBy, tOn, hRun, pHWins, iaHWins);
         }
 
-        // Empate truco
         if (*tOn == 1 && *fWin == 0 && *pHWins == 1)
         {
             pW += *handV;
