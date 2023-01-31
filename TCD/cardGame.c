@@ -98,52 +98,111 @@ void main()
             printf("\n\nValor da mão atual: %d\n\n", handValue);
 
             // Player
+            if (playerWins == 11 || iaWins == 11)
+            {
+                handValue += 3;
+
+                printf("Voce esta em uma mao de 11\n\n");
+                printf("Escolha a posicao da carta para jogar (nao eh permitido pedir truco)\n");
+
+                if (playerWins == 11)
+                    for (int i = 0; i < cardsOnHand; i++)
+                        printf("\t[%d]", i + 1);
+                else
+                    for (int i = 0; i < cardsOnHand; i++)
+                        printf("\t[%d] %s\n", i + 1, player[0].cardsN[i]);
+
+                printf("\nOpcao: ");
+                scanf("%d", &picked);
+
+                if (picked == 1)
+                {
+                    playerCardRank = player[0].cardsV[0];
+                    CardsOfRound(cardsOfRound, 0, 0);
+                    cardsOnHand--;
+                }
+                else if (picked == 2)
+                {
+                    playerCardRank = player[0].cardsV[1];
+                    CardsOfRound(cardsOfRound, 0, 1);
+                    cardsOnHand--;
+                }
+                else if (picked == 3)
+                {
+                    playerCardRank = player[0].cardsV[2];
+                    CardsOfRound(cardsOfRound, 0, 2);
+                    cardsOnHand--;
+                }
+                printf("\nVoce jogou %s\n", player[0].cardsN[picked - 1]);
+                roundCount++;
+            }
             if (turn == 0)
             {
                 if (trickOn == 0 || trickOn == 1 && decideTrick >= 2)
                 {
-                    printf("Escolha a posicao da carta para jogar");
-                    if (trickOn == 0)
-                        printf(" ou 4 para trucar o truco\n");
-                    printf("\nSuas cartas sao: \n\n");
-
-                    for (int i = 0; i < cardsOnHand; i++)
-                        printf("\t[%d] %s\n", i + 1, player[0].cardsN[i]);
-
-                    printf("\nOpcao: ");
-                    scanf("%d", &picked);
-
-                    if (picked == 4)
+                    int decisionMade = 0;
+                    while (decisionMade == 0)
                     {
-                        trick(tOn, handV, dTrick, rC, callTrick);
-                        printf("Voce trucou\n");
-                        trickedBy = 1;
-                        decideTrick++;
-                        callingTrick = 1;
-                    }
-                    else
-                    {
-                        if (picked == 1)
-                        {
-                            playerCardRank = player[0].cardsV[0];
-                            CardsOfRound(cardsOfRound, 0, 0);
-                            cardsOnHand--;
-                        }
-                        else if (picked == 2)
-                        {
-                            playerCardRank = player[0].cardsV[1];
-                            CardsOfRound(cardsOfRound, 0, 1);
-                            cardsOnHand--;
-                        }
-                        else if (picked == 3)
-                        {
-                            playerCardRank = player[0].cardsV[2];
-                            CardsOfRound(cardsOfRound, 0, 2);
-                            cardsOnHand--;
-                        }
+                        decisionMade = 1;
+                        printf("Escolha a posicao da carta para jogar");
+                        if (trickOn == 0)
+                            printf(" ou 4 para trucar o truco\n");
+                        printf("\nSuas cartas sao: \n\n");
 
-                        printf("\nVoce jogou %s\n", player[0].cardsN[picked - 1]);
-                        roundCount++;
+                        for (int i = 0; i < cardsOnHand; i++)
+                            printf("\t[%d] %s\n", i + 1, player[0].cardsN[i]);
+
+                        printf("\nOpcao: ");
+                        scanf("%d", &picked);
+
+                        if (picked == 4)
+                        {
+                            if (trickOn == 0)
+                            {
+                                trick(tOn, handV, dTrick, rC, callTrick);
+                                printf("Voce trucou\n");
+                                trickedBy = 1;
+                                decideTrick++;
+                                callingTrick = 1;
+                            }
+                            else
+                            {
+                                if (trickedBy == 1)
+                                {
+                                    decisionMade = 0;
+                                    printf("\nNao pode trucar uma partida ja trucada\n\n");
+                                }
+                                else
+                                {
+                                    handValue += 3;
+                                    printf("Voce aumentou para %d", handValue);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (picked == 1)
+                            {
+                                playerCardRank = player[0].cardsV[0];
+                                CardsOfRound(cardsOfRound, 0, 0);
+                                cardsOnHand--;
+                            }
+                            else if (picked == 2)
+                            {
+                                playerCardRank = player[0].cardsV[1];
+                                CardsOfRound(cardsOfRound, 0, 1);
+                                cardsOnHand--;
+                            }
+                            else if (picked == 3)
+                            {
+                                playerCardRank = player[0].cardsV[2];
+                                CardsOfRound(cardsOfRound, 0, 2);
+                                cardsOnHand--;
+                            }
+
+                            printf("\nVoce jogou %s\n", player[0].cardsN[picked - 1]);
+                            roundCount++;
+                        }
                     }
                 }
                 else if (trickOn == 1 && decideTrick < 2)
@@ -216,14 +275,14 @@ void main()
                         else if (randomTrick > 8 && trickOn == 0)
                             picked = 4;
 
-                        if (picked == 4)
+                        if (picked == 4 && playerWins < 11 && iaWins < 11)
                         {
                             trick(tOn, handV, dTrick, rC, callTrick);
                             printf("IA trucou\n");
                             trickedBy = 1;
                             decideTrick++;
                         }
-                        else
+                        else if (trickOn == 0 || (trickOn == 1 && decideTrick >= 2))
                         {
                             if (trickOn == 0)
                             {
@@ -252,9 +311,9 @@ void main()
                                 CardsOfRound(cardsOfRound, 1, 1);
                             else if (picked == 3)
                                 CardsOfRound(cardsOfRound, 1, 2);
-
-                            roundCount++;
                         }
+                        roundCount++;
+
                         strcpy(player[1].cardsN[0], fillDeckName(cardsOfRound[1][0]));
                         strcpy(player[1].cardsN[1], fillDeckName(cardsOfRound[1][1]));
                     }
@@ -366,7 +425,6 @@ void checkGame(int *pChoice, int *iChoice, int *pW, int *iaW, int *pHWins, int *
         printf("\nA mao empatou");
         *pHWins += 1;
         *iaHWins += 1;
-        *t = 1;
     }
 
     // Trucar
